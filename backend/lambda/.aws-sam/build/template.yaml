@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  UploadSignedURLFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UploadSignedURLFunction
+      Handler: bootstrap
+      Runtime: provided.al2
+      Environment:
+        Variables:
+          BUCKET_NAME:
+            Ref: BUCKETNAME
+          REGION:
+            Ref: REGION
+          ENVIRONMENT:
+            Ref: ENVIRONMENT
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload-signed-url
+            Method: get
+    Metadata:
+      SamResourceId: UploadSignedURLFunction
+Parameters:
+  BUCKETNAME:
+    Type: String
+    Default: my-bucket
+  ENVIRONMENT:
+    Type: String
+    Default: dev
+  REGION:
+    Type: String
+    Default: us-east-1

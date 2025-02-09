@@ -1,0 +1,14 @@
+{
+    "httpMethod": "GET",
+    "path": "/upload-signed-url",
+    "headers": {},
+    "queryStringParameters": {},
+    "pathParameters": {},
+    "stageVariables": {},
+    "requestContext": {
+      "identity": {
+        "sourceIp": "127.0.0.1"
+      }
+    },
+    "body": ""
+  }

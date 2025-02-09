@@ -33,7 +33,9 @@ func MustEnv(key string) string {
 func init() {
 
 	bucketName = MustEnv("BUCKET_NAME")
-	client, err := mys3.LoadDefaultConfig()
+	env := MustEnv("ENVIRONMENT")
+	region := MustEnv("REGION")
+	client, err := mys3.LoadDefaultConfig(env, region)
 	if err != nil {
 		log.Fatalf("unable to load SDK config, %v", err)
 	}
