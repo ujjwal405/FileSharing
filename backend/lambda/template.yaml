@@ -19,7 +19,23 @@ Resources:
           Properties:
             Path: /upload-signed-url
             Method: get
-
+  DownloadSignedURLFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./download_signed_url
+      Handler: bootstrap
+      Runtime: provided.al2
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref BUCKETNAME
+          REGION: !Ref REGION
+          ENVIRONMENT: !Ref ENVIRONMENT
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /download-signed-url
+            Method: get
   
 Parameters:
   BUCKETNAME:

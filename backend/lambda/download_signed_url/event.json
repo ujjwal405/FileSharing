@@ -1,0 +1,13 @@
+{
+    "httpMethod": "POST",
+    "path": "/download-signed-url",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "requestContext": {
+      "identity": {
+        "sourceIp": "127.0.0.1"
+      }
+    },
+    "body": "{\"keyid\": \"abc.txt\"}"
+  }
