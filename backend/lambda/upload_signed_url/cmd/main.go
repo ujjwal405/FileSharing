@@ -49,7 +49,10 @@ func handleUploadSignedURL(ctx context.Context, event events.APIGatewayProxyRequ
 		log.Printf("failed to get presigned URL: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed to get presigned URL",
+			Headers: map[string]string{
+				"Content-Type": "application/json",
+			},
+			Body: "Internal Server Error",
 		}, nil
 	}
 	responseBody, err := json.Marshal(map[string]string{
@@ -59,12 +62,18 @@ func handleUploadSignedURL(ctx context.Context, event events.APIGatewayProxyRequ
 		log.Printf("failed to marshal response: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed to marshal response",
+			Headers: map[string]string{
+				"Content-Type": "application/json",
+			},
+			Body: "Internal Server Error",
 		}, nil
 	}
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
-		Body:       string(responseBody),
+		Headers: map[string]string{
+			"Content-Type": "application/json",
+		},
+		Body: string(responseBody),
 	}, nil
 
 }
