@@ -69,12 +69,18 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 		log.Printf("failed to marshal response: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed to marshal response",
+			Headers: map[string]string{
+				"Content-Type": "application/json",
+			},
+			Body: "Internal Server Error",
 		}, nil
 	}
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
-		Body:       string(responseBody),
+		Headers: map[string]string{
+			"Content-Type": "application/json",
+		},
+		Body: string(responseBody),
 	}, nil
 
 }
