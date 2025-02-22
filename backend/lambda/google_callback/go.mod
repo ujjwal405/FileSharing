@@ -9,9 +9,9 @@ require (
 	golang.org/x/oauth2 v0.26.0
 )
 
-
 require (
 	cloud.google.com/go/compute/metadata v0.3.0 // indirect
+	github.com/aws/aws-sdk-go v1.55.6
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.60 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.29 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.33 // indirect
