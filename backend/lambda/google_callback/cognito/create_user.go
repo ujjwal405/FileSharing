@@ -15,10 +15,10 @@ func (c *CognitoClient) CreateUser(ctx context.Context, email, firstName, lastNa
 		Username:   aws.String(email), // Using email as the username
 		UserAttributes: []types.AttributeType{
 			{Name: aws.String("email"), Value: aws.String(email)},
-			{Name: aws.String("first_name"), Value: aws.String(firstName)},  // First Name
-			{Name: aws.String("last_name"), Value: aws.String(lastName)},    // Last Name
-			{Name: aws.String("email_verified"), Value: aws.String("true")}, // Mark email as verified
-			{Name: aws.String("google_login"), Value: aws.String("true")},
+			{Name: aws.String("email_verified"), Value: aws.String("true")},
+			{Name: aws.String("custom:first_name"), Value: aws.String(firstName)}, // First Name
+			{Name: aws.String("custom:last_name"), Value: aws.String(lastName)},   // Last Name
+			{Name: aws.String("custom:google_login"), Value: aws.String("true")},
 		},
 		TemporaryPassword:  aws.String(temp_pass),
 		ForceAliasCreation: false,                           // No need to force alias creation since we're checking first
