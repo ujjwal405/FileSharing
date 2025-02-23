@@ -34,23 +34,24 @@ func initGoogleConfig() (*GoogleConfig, error) {
 
 }
 
-func (c *GoogleConfig) Callback(ctx context.Context, code string) (string, error) {
+func (c *GoogleConfig) Callback(ctx context.Context, code string) (string, string, string, error) {
 	token, err := c.OAuthConfig.Exchange(ctx, code)
 	if err != nil {
-		return "", err
+		return "", "", "", err
 	}
 	resp, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
 	if err != nil {
-		return "", err
+		return "", "", "", err
 	}
 
 	defer resp.Body.Close()
 	userdata, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", err
+		return "", "", "", err
 	}
-	var data map[string]interface{}
+	var data googleInfo
 	json.Unmarshal(userdata, &data)
-	email := data["email"].(string)
-	return email, nil
+
+	return data.Email, data.GivenName, data.FamilyName, nil
+
 }
