@@ -44,7 +44,8 @@ func init() {
 }
 
 func handleUploadSignedURL(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	url, err := MyS3Client.GetUploadSignedURL(ctx, bucketName, expiration)
+	key := mys3.GenerateUid()
+	url, err := MyS3Client.GetUploadSignedURL(ctx, bucketName, key, expiration)
 	if err != nil {
 		log.Printf("failed to get presigned URL: %v", err)
 		return events.APIGatewayProxyResponse{
@@ -56,7 +57,8 @@ func handleUploadSignedURL(ctx context.Context, event events.APIGatewayProxyRequ
 		}, nil
 	}
 	responseBody, err := json.Marshal(map[string]string{
-		"url": url,
+		"url":     url,
+		"file_id": key,
 	})
 	if err != nil {
 		log.Printf("failed to marshal response: %v", err)

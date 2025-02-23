@@ -61,8 +61,7 @@ func LoadDefaultConfig(env, region string) (*Mys3, error) {
 	return &Mys3{s3pClient: presignClient}, nil
 }
 
-func (s *Mys3) GetUploadSignedURL(ctx context.Context, bucketName string, expiration time.Duration) (string, error) {
-	key := generateUid()
+func (s *Mys3) GetUploadSignedURL(ctx context.Context, bucketName, key string, expiration time.Duration) (string, error) {
 	req, err := s.s3pClient.PresignPutObject(ctx, &s3.PutObjectInput{
 		Bucket: aws.String(bucketName),
 		Key:    aws.String(key),
@@ -74,6 +73,6 @@ func (s *Mys3) GetUploadSignedURL(ctx context.Context, bucketName string, expira
 	return req.URL, nil
 }
 
-func generateUid() string {
+func GenerateUid() string {
 	return uuid.NewString()
 }
