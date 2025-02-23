@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"math/big"
 	"strings"
+	"time"
 )
 
 // GenerateTemporaryPassword generates a secure temporary password
@@ -20,4 +21,8 @@ func GenerateTemporaryPassword() string {
 	}
 
 	return passwordBuilder.String()
+}
+
+func GenerateExpiryTime() int64 {
+	return time.Now().Add(30 * 24 * time.Hour).Unix()
 }

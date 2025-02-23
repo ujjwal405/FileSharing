@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
-func (db *DynamoClient) PutItem(ctx context.Context, email, token string, expires_at int64) error {
+func (db *DynamoClient) PutUser(ctx context.Context, email, token string, expires_at int64) error {
 	item := map[string]types.AttributeValue{
 		"email":         &types.AttributeValueMemberS{Value: email}, // Primary Key
 		"refresh_token": &types.AttributeValueMemberS{Value: token},

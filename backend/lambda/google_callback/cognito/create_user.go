@@ -7,10 +7,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	cognito "github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider/types"
-	"github.com/ujjwal405/FileSharing/google_callback/helper"
 )
 
-func (c *CognitoClient) CreateUser(ctx context.Context, email, firstName, lastName string) error {
+func (c *CognitoClient) CreateUser(ctx context.Context, email, firstName, lastName, temp_pass string) error {
 	input := &cognito.AdminCreateUserInput{
 		UserPoolId: aws.String(c.userPoolID),
 		Username:   aws.String(email), // Using email as the username
@@ -21,7 +20,7 @@ func (c *CognitoClient) CreateUser(ctx context.Context, email, firstName, lastNa
 			{Name: aws.String("email_verified"), Value: aws.String("true")}, // Mark email as verified
 			{Name: aws.String("google_login"), Value: aws.String("true")},
 		},
-		TemporaryPassword:  aws.String(helper.GenerateTemporaryPassword()),
+		TemporaryPassword:  aws.String(temp_pass),
 		ForceAliasCreation: false,                           // No need to force alias creation since we're checking first
 		MessageAction:      types.MessageActionTypeSuppress, // Suppresses email invitation (optional)
 	}

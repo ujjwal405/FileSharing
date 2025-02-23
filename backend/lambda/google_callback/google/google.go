@@ -15,7 +15,7 @@ type GoogleConfig struct {
 	OAuthConfig *oauth2.Config
 }
 
-func initGoogleConfig() (*GoogleConfig, error) {
+func InitGoogleConfig() (*GoogleConfig, error) {
 
 	secretIDs := []string{"GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REDIRECT_URL"}
 	secrets, err := secret_manager.GetSecrets(secretIDs)
