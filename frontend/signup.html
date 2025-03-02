@@ -106,6 +106,38 @@
 <!-- todo add input validation-->
 
 <!-- Bootstrap JS and dependencies (Popper.js) -->
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const passwordInput = document.getElementById("password");
+
+        form.addEventListener("submit", function (event) {
+            const password = passwordInput.value.trim();
+            const errorDiv = document.getElementById("passwordError");
+
+            if (password.length < 6) {
+                event.preventDefault(); // Prevent form submission
+                if (!errorDiv) {
+                    // Create an error message if it doesn't exist
+                    const errorMessage = document.createElement("div");
+                    errorMessage.id = "passwordError";
+                    errorMessage.className = "text-danger mt-2";
+                    errorMessage.innerText = "Password must be at least 6 characters long.";
+                    passwordInput.parentNode.appendChild(errorMessage);
+                }
+            } else {
+                // Remove error message if password is valid
+                if (errorDiv) errorDiv.remove();
+            }
+        });
+    });
+</script>
+
+
+ 
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js'></script>
 <script src='https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.min.js'></script>
