@@ -7,12 +7,11 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	
+
 	my_cognito "github.com/ujjwal405/FileSharing/signin/cognito"
 	my_db "github.com/ujjwal405/FileSharing/signin/dynamo_db"
 
 	"github.com/ujjwal405/FileSharing/signin/handler"
-	
 )
 
 var lambdaHandler *handler.SignInHandler
@@ -23,12 +22,12 @@ func init() {
 	if err != nil {
 		log.Fatalf("unable to load cognito config, %v", err)
 	}
-	dClient,err:=my_db.NewDynamoClient()
+	dClient, err := my_db.NewDynamoClient()
 	if err != nil {
 		log.Fatalf("unable to load cognito config, %v", err)
 	}
 
-	lambdaHandler = handler.NewSignInHandler(cClient,dClient)
+	lambdaHandler = handler.NewSignInHandler(cClient, dClient)
 }
 
 func handleUserSignIn(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -45,8 +44,9 @@ func handleUserSignIn(ctx context.Context, event events.APIGatewayProxyRequest) 
 		}, nil
 	}
 
-	accessToken, idToken,err:=lambdaHandler.SignInUser(ctx,req)
-	if err!=nil{
+	accessToken, idToken, err := lambdaHandler.SignInUser(ctx, req)
+	if err != nil {
+		log.Printf("failed to handle user signin: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: 500,
 			Headers: map[string]string{
@@ -57,7 +57,7 @@ func handleUserSignIn(ctx context.Context, event events.APIGatewayProxyRequest) 
 	}
 	responseBody, _ := json.Marshal(map[string]string{
 		"access_token": accessToken,
-		"id_token":idToken
+		"id_token":     idToken,
 	})
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
