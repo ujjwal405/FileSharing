@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 
+	"github.com/ujjwal405/FileSharing/signin/apiError"
 	my_cognito "github.com/ujjwal405/FileSharing/signin/cognito"
 	my_db "github.com/ujjwal405/FileSharing/signin/dynamo_db"
 
@@ -46,14 +47,25 @@ func handleUserSignIn(ctx context.Context, event events.APIGatewayProxyRequest) 
 
 	accessToken, idToken, err := lambdaHandler.SignInUser(ctx, req)
 	if err != nil {
-		log.Printf("failed to handle user signin: %v", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: 500,
-			Headers: map[string]string{
-				"Content-Type": "application/json",
-			},
-			Body: "Internal Server Error",
-		}, nil
+		log.Printf("failed to handle Signin User: %v", err.Error())
+		if apiErr, ok := err.(apiError.APIError); ok {
+			return events.APIGatewayProxyResponse{
+				StatusCode: apiErr.StatusCode,
+				Headers: map[string]string{
+					"Content-Type": "application/json",
+				},
+				Body: apiErr.Error(),
+			}, nil
+		} else {
+			log.Printf("failed to handle user signin: %v", err)
+			return events.APIGatewayProxyResponse{
+				StatusCode: 500,
+				Headers: map[string]string{
+					"Content-Type": "application/json",
+				},
+				Body: "Internal Server Error",
+			}, nil
+		}
 	}
 	responseBody, _ := json.Marshal(map[string]string{
 		"access_token": accessToken,

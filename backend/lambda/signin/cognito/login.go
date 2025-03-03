@@ -2,10 +2,12 @@ package cognito
 
 import (
 	"context"
+	"errors"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	cognito "github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider/types"
+	"github.com/ujjwal405/FileSharing/signin/apiError"
 )
 
 func (c *CognitoClient) UserLogin(ctx context.Context, usr User) (*Token, error) {
@@ -19,6 +21,11 @@ func (c *CognitoClient) UserLogin(ctx context.Context, usr User) (*Token, error)
 	}
 	result, err := c.cognitoClient.InitiateAuth(ctx, authInput)
 	if err != nil {
+		var notAuthorizedErr *types.NotAuthorizedException
+		if errors.As(err, &notAuthorizedErr) {
+			return nil, apiError.InvalidCredentials()
+		}
+		//
 		return nil, err
 	}
 	var token Token
