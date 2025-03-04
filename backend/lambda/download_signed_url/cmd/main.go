@@ -57,7 +57,7 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 		}, nil
 	}
 
-	err = helper.IsCodeExpired(requestBody.KeyID)
+	keyID, err := helper.IsCodeExpired(requestBody.KeyID)
 	if err != nil {
 		if apiErr, ok := err.(apierror.APIError); ok {
 			return events.APIGatewayProxyResponse{
@@ -68,7 +68,7 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 				Body: apiErr.Error(),
 			}, nil
 		} else {
-			log.Printf("failed to handle user signin: %v", err)
+			log.Printf("failed to handle download signed url: %v", err)
 			return events.APIGatewayProxyResponse{
 				StatusCode: 500,
 				Headers: map[string]string{
@@ -78,7 +78,7 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 			}, nil
 		}
 	}
-	url, err := MyS3Client.GetDownloadSignedURL(ctx, bucketName, requestBody.KeyID, expiration)
+	url, err := MyS3Client.GetDownloadSignedURL(ctx, bucketName, keyID, expiration)
 	if err != nil {
 		log.Printf("failed to get presigned URL: %v", err)
 		return events.APIGatewayProxyResponse{
