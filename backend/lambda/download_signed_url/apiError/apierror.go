@@ -1,0 +1,19 @@
+package apierror
+
+import "fmt"
+
+type APIError struct {
+	StatusCode int `json:"statusCode"`
+	Msg        any `json:"msg"`
+}
+
+func (e APIError) Error() string {
+	return fmt.Sprintf("api error %v", e.Msg)
+}
+
+func InvalidCode() APIError {
+	return APIError{
+		StatusCode: 400,
+		Msg:        "invalid code",
+	}
+}

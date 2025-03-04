@@ -10,6 +10,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	apierror "github.com/ujjwal405/FileSharing/download_signed_url/apiError"
+	"github.com/ujjwal405/FileSharing/download_signed_url/helper"
 	mys3 "github.com/ujjwal405/FileSharing/download_signed_url/s3"
 )
 
@@ -53,6 +55,28 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 			StatusCode: http.StatusBadRequest,
 			Body:       "Invalid request body",
 		}, nil
+	}
+
+	err = helper.IsCodeExpired(requestBody.KeyID)
+	if err != nil {
+		if apiErr, ok := err.(apierror.APIError); ok {
+			return events.APIGatewayProxyResponse{
+				StatusCode: apiErr.StatusCode,
+				Headers: map[string]string{
+					"Content-Type": "application/json",
+				},
+				Body: apiErr.Error(),
+			}, nil
+		} else {
+			log.Printf("failed to handle user signin: %v", err)
+			return events.APIGatewayProxyResponse{
+				StatusCode: 500,
+				Headers: map[string]string{
+					"Content-Type": "application/json",
+				},
+				Body: "Internal Server Error",
+			}, nil
+		}
 	}
 	url, err := MyS3Client.GetDownloadSignedURL(ctx, bucketName, requestBody.KeyID, expiration)
 	if err != nil {
