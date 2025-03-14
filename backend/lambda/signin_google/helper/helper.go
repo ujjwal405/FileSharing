@@ -1,17 +1,22 @@
 package helper
 
 import (
-	"crypto/rand"
-	"encoding/base64"
-	"log"
+	"time"
+
+	"github.com/golang-jwt/jwt/v4"
 )
 
-func GenerateStateToken() string {
-	b := make([]byte, 32)
-	_, err := rand.Read(b)
-	if err != nil {
-		log.Println("Error generating state token:", err)
-		return "default-state"
+// GenerateStateToken creates a signed JWT as the state token
+func GenerateStateToken(jwtSecret string) (string, error) {
+	// Create claims with expiry
+	claims := jwt.MapClaims{
+		"exp": time.Now().Add(5 * time.Minute).Unix(), // Token expires in 5 minutes
+		"iat": time.Now().Unix(),
 	}
-	return base64.URLEncoding.EncodeToString(b)
+
+	// Create token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// Sign token
+	return token.SignedString(jwtSecret)
 }
