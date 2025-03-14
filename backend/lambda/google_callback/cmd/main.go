@@ -12,9 +12,11 @@ import (
 	my_google "github.com/ujjwal405/FileSharing/google_callback/google"
 	"github.com/ujjwal405/FileSharing/google_callback/handler"
 	"github.com/ujjwal405/FileSharing/google_callback/helper"
+	secret_manager "github.com/ujjwal405/FileSharing/google_callback/secret_manager"
 )
 
 var lambdaHandler *handler.LambdaHandler
+var secretKey string
 
 func init() {
 	googleConfig, err := my_google.InitGoogleConfig()
@@ -29,11 +31,16 @@ func init() {
 	if err != nil {
 		log.Fatalf("unable to load dynamo config, %v", err)
 	}
-	lambdaHandler = handler.NewLambdaHandler(googleConfig, cClient, dClient)
+	secret, err := secret_manager.GetSecrets([]string{"SECRET_KEY"})
+	if err != nil {
+		log.Fatalf("unable to load secrets %v", err)
+	}
+	secretKey = secret["SECRET_KEY"]
+	lambdaHandler = handler.NewLambdaHandler(googleConfig, cClient, dClient, secretKey)
 }
 
 func handleGoogleCallback(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	IdToken, AccessToken, err := lambdaHandler.HandleGoogleCallback(ctx, event.QueryStringParameters["code"])
+	IdToken, AccessToken, err := lambdaHandler.HandleGoogleCallback(ctx, event.QueryStringParameters["code"], event.QueryStringParameters["state"])
 	if err != nil {
 		log.Printf("failed to handle google callback: %v", err.Error())
 		if apiErr, ok := err.(helper.APIError); ok {

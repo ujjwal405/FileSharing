@@ -6,6 +6,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.36.2
 	github.com/aws/aws-sdk-go-v2/config v1.29.7
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.34.19
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	golang.org/x/oauth2 v0.26.0
 )
 

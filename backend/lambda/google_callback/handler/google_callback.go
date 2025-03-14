@@ -13,18 +13,22 @@ type LambdaHandler struct {
 	googleOauthConfig *my_google.GoogleConfig
 	cognitoClient     *my_cognito.CognitoClient
 	dynamoClient      *my_dynamo.DynamoClient
+	secretKey         string
 }
 
-func NewLambdaHandler(googleOauthConfig *my_google.GoogleConfig, cognitoClient *my_cognito.CognitoClient, dynamoClient *my_dynamo.DynamoClient) *LambdaHandler {
+func NewLambdaHandler(googleOauthConfig *my_google.GoogleConfig, cognitoClient *my_cognito.CognitoClient, dynamoClient *my_dynamo.DynamoClient, secretKey string) *LambdaHandler {
 	return &LambdaHandler{
 		googleOauthConfig: googleOauthConfig,
 		cognitoClient:     cognitoClient,
 		dynamoClient:      dynamoClient,
+		secretKey:         secretKey,
 	}
 }
 
-func (h *LambdaHandler) HandleGoogleCallback(ctx context.Context, code string) (string, string, error) {
-
+func (h *LambdaHandler) HandleGoogleCallback(ctx context.Context, code string, stateToken string) (string, string, error) {
+	if err := helper.VerifyStateToken(stateToken, h.secretKey); err != nil {
+		return "", "", err
+	}
 	email, givenName, familyName, err := h.googleOauthConfig.Callback(ctx, code)
 	if err != nil {
 		return "", "", err
