@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/golang-jwt/jwt/v5"
+	apierror "github.com/ujjwal405/FileSharing/authorizer/apiError"
 	"github.com/ujjwal405/FileSharing/authorizer/cache"
 )
 
@@ -30,12 +31,12 @@ func (v *Verifier) VerifyIDToken(tokenString string) (*IDToken, error) {
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 
 		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Method.Alg())
+			return nil, apierror.InvalidSignRequest()
 		}
 
 		kid, ok := token.Header["kid"].(string)
 		if !ok {
-			return nil, fmt.Errorf("kid not found in token header")
+			return nil, apierror.NewAPIError(400, "kid not found in token header")
 		}
 
 		key, exists := v.cache.GetKey(kid)
@@ -52,7 +53,7 @@ func (v *Verifier) VerifyIDToken(tokenString string) (*IDToken, error) {
 
 	if err != nil {
 		if err == jwt.ErrTokenExpired {
-			return nil, fmt.Errorf("id token has expired")
+			return nil, apierror.ErrTokenExpired
 		}
 		return nil, fmt.Errorf("token verification failed: %v", err)
 	}
@@ -66,17 +67,17 @@ func (v *Verifier) VerifyIDToken(tokenString string) (*IDToken, error) {
 
 	// Check issuer (iss)
 	if claims.Issuer != expectedIssuer {
-		return nil, fmt.Errorf("invalid issuer: got %s, expected %s", claims.Issuer, expectedIssuer)
+		return nil, apierror.NewAPIError(400, "unknown issuer")
 	}
 
 	// Check audience (aud)
 	if !containsAudience(claims.Audience, v.clientID) {
-		return nil, fmt.Errorf("invalid audience for id token: got %v, expected %s", claims.Audience, v.clientID)
+		return nil, apierror.NewAPIError(400, "unknown audience")
 	}
 
 	// Check token_use
 	if claims.TokenUse != "id" {
-		return nil, fmt.Errorf("invalid token_use for access token: got %s, expected 'access'", claims.TokenUse)
+		return nil, apierror.NewAPIError(400, "unknown token use")
 	}
 
 	return claims, nil
@@ -89,12 +90,12 @@ func (v *Verifier) VerifyAccessToken(tokenString string) (*AccessToken, error) {
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 
 		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Method.Alg())
+			return nil, apierror.InvalidSignRequest()
 		}
 
 		kid, ok := token.Header["kid"].(string)
 		if !ok {
-			return nil, fmt.Errorf("kid not found in token header")
+			return nil, apierror.NewAPIError(400, "kid not found in token header")
 		}
 
 		key, exists := v.cache.GetKey(kid)
@@ -111,7 +112,7 @@ func (v *Verifier) VerifyAccessToken(tokenString string) (*AccessToken, error) {
 
 	if err != nil {
 		if err == jwt.ErrTokenExpired {
-			return nil, fmt.Errorf("access token has expired")
+			return nil, apierror.ErrTokenExpired
 		}
 		return nil, fmt.Errorf("token verification failed: %v", err)
 	}
@@ -125,17 +126,17 @@ func (v *Verifier) VerifyAccessToken(tokenString string) (*AccessToken, error) {
 
 	// Check issuer (iss)
 	if claims.Issuer != expectedIssuer {
-		return nil, fmt.Errorf("invalid issuer: got %s, expected %s", claims.Issuer, expectedIssuer)
+		return nil, apierror.NewAPIError(400, "unknown issuer")
 	}
 
 	// Check audience (aud)
 	if !containsAudience(claims.Audience, v.clientID) {
-		return nil, fmt.Errorf("invalid audience for access token: got %v, expected %s", claims.Audience, v.clientID)
+		return nil, apierror.NewAPIError(400, "unknown audience")
 	}
 
 	// Check token_use
 	if claims.TokenUse != "access" {
-		return nil, fmt.Errorf("invalid token_use for access token: got %s, expected 'access'", claims.TokenUse)
+		return nil, apierror.NewAPIError(400, "unknown token use")
 	}
 
 	return claims, nil
