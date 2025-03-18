@@ -12,12 +12,12 @@ import (
 )
 
 type AuthorizerHandler struct {
-	cognito  my_cognito.CognitoClient
+	cognito  *my_cognito.CognitoClient
 	verifier *verifier.Verifier
 	dynamo   *my_dynamo.DynamoClient
 }
 
-func NewLambdaHandler(cognito my_cognito.CognitoClient, verifier *verifier.Verifier, dynamo *my_dynamo.DynamoClient) *AuthorizerHandler {
+func NewLambdaHandler(cognito *my_cognito.CognitoClient, verifier *verifier.Verifier, dynamo *my_dynamo.DynamoClient) *AuthorizerHandler {
 	return &AuthorizerHandler{
 		cognito:  cognito,
 		verifier: verifier,

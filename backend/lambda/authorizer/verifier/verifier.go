@@ -7,6 +7,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	apierror "github.com/ujjwal405/FileSharing/authorizer/apiError"
 	"github.com/ujjwal405/FileSharing/authorizer/cache"
+	secretmanager "github.com/ujjwal405/FileSharing/authorizer/secret_manager"
 )
 
 type Verifier struct {
@@ -16,13 +17,19 @@ type Verifier struct {
 	userPoolID string
 }
 
-func NewVerifier(cache *cache.JWKSCache, cleintID, region, userPoolID string) *Verifier {
-	return &Verifier{
-		cache:      cache,
-		clientID:   cleintID,
-		region:     region,
-		userPoolID: userPoolID,
+func NewVerifier() (*Verifier, error) {
+
+	secrets, err := secretmanager.GetSecrets([]string{"COGNITO_REGION", "APP_CLIENT_ID", "USER_POOL_ID"})
+	if err != nil {
+		return nil, err
 	}
+	mycache := cache.NewJWKSCache()
+	return &Verifier{
+		cache:      mycache,
+		clientID:   secrets["APP_CLIENT_ID"],
+		region:     secrets["COGNITO_REGION"],
+		userPoolID: secrets["USER_POOL_ID"],
+	}, nil
 }
 
 func (v *Verifier) VerifyIDToken(tokenString string) (*IDToken, error) {

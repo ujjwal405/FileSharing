@@ -3,6 +3,7 @@ module github.com/ujjwal405/FileSharing/authorizer
 go 1.22.5
 
 require (
+	github.com/aws/aws-lambda-go v1.47.0
 	github.com/aws/aws-sdk-go-v2 v1.36.3
 	github.com/aws/aws-sdk-go-v2/config v1.29.9
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.51.3
