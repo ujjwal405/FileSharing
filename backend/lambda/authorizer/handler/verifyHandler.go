@@ -55,8 +55,11 @@ func (h *AuthorizerHandler) Authorize(ctx context.Context, accessToken, idToken 
 		var newToken NewToken
 		newToken.AccessToken = newAccesToken
 		newToken.IdToken = newIDToken
+		newToken.Username = idTokenClaims.Username
 		return &newToken, nil
 	}
-	return nil, nil
+	return &NewToken{
+		Username: idTokenClaims.Username,
+	}, nil
 
 }

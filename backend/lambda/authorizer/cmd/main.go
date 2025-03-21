@@ -48,7 +48,7 @@ func handleAuthorize(ctx context.Context, event events.APIGatewayCustomAuthorize
 	newToken, err := lambdaHandler.Authorize(ctx, parts[1], idToken)
 	if err != nil {
 		log.Printf("failed to handle authorization: %v", err)
-		return generatePolicyWithContext("Deny", event.MethodArn, nil), nil
+		return generatePolicyWithContext("Deny", event.MethodArn, newToken), nil
 	}
 	return generatePolicyWithContext("Allow", event.MethodArn, newToken), nil
 }
@@ -67,10 +67,18 @@ func generatePolicyWithContext(effect, resource string, claims *handler.NewToken
 		},
 	}
 	if effect == "Allow" && claims != nil {
-		policy.Context = map[string]interface{}{
-			"access_token": claims.AccessToken,
-			"id_token":     claims.IdToken,
+		contextMap := map[string]interface{}{
+			"username": claims.Username,
 		}
+
+		if claims.AccessToken != "" {
+			contextMap["access_token"] = claims.AccessToken
+		}
+		if claims.IdToken != "" {
+			contextMap["id_token"] = claims.IdToken
+		}
+
+		policy.Context = contextMap
 	}
 
 	return policy
