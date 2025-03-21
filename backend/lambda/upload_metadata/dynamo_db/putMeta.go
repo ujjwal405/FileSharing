@@ -2,6 +2,8 @@ package dynamo_db
 
 import (
 	"context"
+	"strconv"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -11,9 +13,10 @@ import (
 func (db *DynamoClient) PutMetaData(ctx context.Context, s3Filename, email, filename string) error {
 
 	item := map[string]types.AttributeValue{
-		"s3filename": &types.AttributeValueMemberS{Value: s3Filename},
-		"email":      &types.AttributeValueMemberS{Value: email},
-		"filename":   &types.AttributeValueMemberS{Value: filename},
+		"s3filename":      &types.AttributeValueMemberS{Value: s3Filename},
+		"email":           &types.AttributeValueMemberS{Value: email},
+		"uploadTimestamp": &types.AttributeValueMemberN{Value: strconv.FormatInt(time.Now().Unix(), 10)},
+		"filename":        &types.AttributeValueMemberS{Value: filename},
 	}
 
 	// Prepare PutItem input
