@@ -20,7 +20,7 @@ func NewLambdaHandler(dbClient *my_dynamo.DynamoClient) *UploadHandler {
 
 func (h *UploadHandler) HandleConformPassword(ctx context.Context, info metadata.FileInfo) error {
 
-	if err := h.dynamoClient.PutMetaData(ctx, info.S3FileName, info.Email, info.FileName); err != nil {
+	if err := h.dynamoClient.PutMetaData(ctx, info.S3FileName, info.Email, info.FileName, info.CreatedAt); err != nil {
 		return err
 	}
 	return nil
