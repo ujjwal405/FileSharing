@@ -47,7 +47,8 @@ func (h *GetFileHandler) HandleGetFiles(ctx context.Context, pageStr string, ema
 	for _, item := range itemsMap {
 		s3Filename := item["s3filename"].(*types.AttributeValueMemberS).Value
 		filename := item["filename"].(*types.AttributeValueMemberS).Value
-		items = append(items, file.FileItem{S3Filename: s3Filename, Filename: filename})
+		createdAt := item["created_at"].(*types.AttributeValueMemberS).Value
+		items = append(items, file.FileItem{S3Filename: s3Filename, Filename: filename, CreatedAt: createdAt})
 	}
 
 	totalPages := int(math.Ceil(float64(totalItems) / float64(limit)))

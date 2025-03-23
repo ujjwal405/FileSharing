@@ -3,6 +3,7 @@ package file
 type FileItem struct {
 	S3Filename string
 	Filename   string
+	CreatedAt  string
 }
 
 // PaginatedFiles represents the response with pagination info
