@@ -2,7 +2,10 @@ module github.com/ujjwal405/FileSharing/signup
 
 go 1.22.5
 
-require github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.49.5
+require (
+	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.49.5
+	github.com/go-passwd/validator v0.0.0-20180902184246-0b4c967e436b
+)
 
 require (
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.60 // indirect

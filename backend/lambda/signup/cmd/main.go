@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/ujjwal405/FileSharing/signup/apiError"
 	my_cognito "github.com/ujjwal405/FileSharing/signup/cognito"
+	"github.com/ujjwal405/FileSharing/signup/helper"
 
 	"github.com/ujjwal405/FileSharing/signup/handler"
 	user "github.com/ujjwal405/FileSharing/signup/user"
@@ -22,8 +23,9 @@ func init() {
 	if err != nil {
 		log.Fatalf("unable to load cognito config, %v", err)
 	}
+	 validator:=helper.NewValidator()
 
-	lambdaHandler = handler.NewUserHandler(cClient)
+	lambdaHandler = handler.NewUserHandler(cClient,validator)
 }
 
 func handleUserSignUp(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {

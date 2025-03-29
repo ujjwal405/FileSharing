@@ -17,3 +17,10 @@ func UserAlreadyExistsError() APIError {
 		Msg:        "User already exists with this email",
 	}
 }
+
+func MinimumLength()APIError{
+	return APIError{
+		StatusCode: 400,
+		Msg: "password must be atleast of length 8",
+	}
+}
