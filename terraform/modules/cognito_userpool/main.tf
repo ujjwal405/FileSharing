@@ -27,6 +27,10 @@ resource "aws_cognito_user_pool" "myPool" {
     required            = false
   }
 
+  password_policy {
+    minimum_length = 8
+  }
+
 
   auto_verified_attributes = ["email"]
 
