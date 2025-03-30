@@ -58,6 +58,12 @@ func (h *AuthorizerHandler) Authorize(ctx context.Context, accessToken, idToken 
 		newToken.Username = idTokenClaims.Username
 		return &newToken, nil
 	} else if helper.IsExpired(expires_at) {
+		if idTokenClaims.GoogleLogin == "true" {
+			if err := h.cognito.DeleteUser(ctx, idTokenClaims.Username); err != nil {
+				return nil, err
+			}
+
+		}
 		return nil, apierror.TokenExpired()
 	}
 	return &NewToken{
