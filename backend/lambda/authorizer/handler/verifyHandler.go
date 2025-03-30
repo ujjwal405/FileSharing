@@ -57,6 +57,8 @@ func (h *AuthorizerHandler) Authorize(ctx context.Context, accessToken, idToken 
 		newToken.IdToken = newIDToken
 		newToken.Username = idTokenClaims.Username
 		return &newToken, nil
+	} else if helper.IsExpired(expires_at) {
+		return nil, apierror.TokenExpired()
 	}
 	return &NewToken{
 		Username: idTokenClaims.Username,
