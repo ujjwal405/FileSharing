@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"net/http"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -36,8 +37,8 @@ func init() {
 }
 
 func handleAuthorize(ctx context.Context, event events.APIGatewayCustomAuthorizerRequestTypeRequest) (events.APIGatewayCustomAuthorizerResponse, error) {
-	authHeader := event.Headers["authorization"] // Example: "Bearer YOUR_ACCESS_TOKEN"
-	idToken := event.Headers["x-id-token"]       // ID Token is passed directly
+	authHeader := event.Headers[http.CanonicalHeaderKey("authorization")]
+	idToken := event.Headers[http.CanonicalHeaderKey("x-id-token")] // ID Token is passed directly
 
 	// Split Authorization header by space
 	parts := strings.Split(authHeader, " ")
