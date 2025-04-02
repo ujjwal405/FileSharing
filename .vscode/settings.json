@@ -1,4 +1,9 @@
 {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "hashicorp.terraform"
+    "[go]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "[terraform]": {
+        "editor.defaultFormatter": "hashicorp.terraform"
+    }
 }

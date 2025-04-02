@@ -1,0 +1,25 @@
+locals {
+  source_dir  = "${path.module}/../../../backend/lambda/${var.lambda_name}/bootstrap"
+  output_path = "${path.module}/../../../backend/lambda/${var.lambda_name}"
+}
+
+
+resource "aws_lambda_function" "this" {
+  function_name = "${var.lambda_name}-${var.env_name}"
+  handler       = "bootstrap" # Go functions use "bootstrap" as the handler
+  runtime       = var.function_runtime
+  timeout       = var.function_timeout
+
+  filename         = "${output_path}/${var.lambda_name}.zip"
+  source_code_hash = data.archive_file.this.output_base64sha256
+
+  role = var.lambda_role_arn
+
+}
+
+
+data "archive_file" "this" {
+  source_dir  = "${local.source_dir}/bootstrap.zip"
+  type        = "zip"
+  output_path = "${output_path}/${var.lambda_name}.zip"
+}
