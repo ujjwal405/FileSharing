@@ -20,7 +20,7 @@ func NewLambdaHandler(cc *cognito.CognitoClient, dc *dynamo_db.DynamoClient) *Lo
 	}
 }
 
-func (h *LogoutHandler) LogoutHandler(ctx context.Context, email string) error {
+func (h *LogoutHandler) LogoutHandler(ctx context.Context, email string, googleLogin string) error {
 	token, err := h.dynamo.GetRefreshToken(ctx, email)
 	if err != nil {
 		return err
@@ -31,6 +31,11 @@ func (h *LogoutHandler) LogoutHandler(ctx context.Context, email string) error {
 	expiredTime := helper.GenerateTime()
 	if err := h.dynamo.Update(ctx, email, expiredTime); err != nil {
 		return err
+	}
+	if googleLogin == "true" {
+		if err := h.cognito.DeleteUser(ctx, email); err != nil {
+			return err
+		}
 	}
 	return nil
 }

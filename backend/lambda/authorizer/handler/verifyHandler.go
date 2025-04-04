@@ -56,6 +56,7 @@ func (h *AuthorizerHandler) Authorize(ctx context.Context, accessToken, idToken 
 		newToken.AccessToken = newAccesToken
 		newToken.IdToken = newIDToken
 		newToken.Username = idTokenClaims.Username
+		newToken.GoogleLogin = idTokenClaims.GoogleLogin
 		return &newToken, nil
 	} else if helper.IsExpired(expires_at) {
 		if idTokenClaims.GoogleLogin == "true" {
@@ -67,7 +68,8 @@ func (h *AuthorizerHandler) Authorize(ctx context.Context, accessToken, idToken 
 		return nil, apierror.TokenExpired()
 	}
 	return &NewToken{
-		Username: idTokenClaims.Username,
+		Username:    idTokenClaims.Username,
+		GoogleLogin: idTokenClaims.GoogleLogin,
 	}, nil
 
 }

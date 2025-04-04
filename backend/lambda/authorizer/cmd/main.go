@@ -78,6 +78,9 @@ func generatePolicyWithContext(effect, resource string, claims *handler.NewToken
 		if claims.IdToken != "" {
 			contextMap["id_token"] = claims.IdToken
 		}
+		if claims.GoogleLogin != "" {
+			contextMap["google_login"] = claims.GoogleLogin
+		}
 
 		policy.Context = contextMap
 	}

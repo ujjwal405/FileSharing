@@ -11,11 +11,12 @@ import (
 type CognitoClient struct {
 	cognitoClient *cognito.Client
 	appClientID   string
+	userPoolId    string
 }
 
 func NewCognitoClient() (*CognitoClient, error) {
 
-	secretIDs := []string{"COGNITO_REGION", "APP_CLIENT_ID"}
+	secretIDs := []string{"COGNITO_REGION", "APP_CLIENT_ID", "USER_POOL_ID"}
 	secrets, err := secret_manager.GetSecrets(secretIDs)
 	if err != nil {
 		return nil, err
@@ -28,6 +29,7 @@ func NewCognitoClient() (*CognitoClient, error) {
 	return &CognitoClient{
 		cognitoClient: client,
 		appClientID:   secrets["APP_CLIENT_ID"],
+		userPoolId:    secrets["USER_POOL_ID"],
 	}, nil
 
 }
