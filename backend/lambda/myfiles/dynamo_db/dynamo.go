@@ -26,6 +26,6 @@ func NewDynamoClient() (*DynamoClient, error) {
 	client := dynamodb.NewFromConfig(cfg)
 	return &DynamoClient{
 		dbClient:  client,
-		tableName: secrets["DYNAMO_USER_TABLE_NAME"],
+		tableName: secrets["DYNAMO_FILE_NAME"],
 	}, nil
 }
