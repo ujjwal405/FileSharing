@@ -17,4 +17,7 @@ resource "aws_dynamodb_table" "my_table" {
       type = attribute.value.type
     }
   }
+  lifecycle {
+    prevent_destroy = var.prevent_destroy
+  }
 }

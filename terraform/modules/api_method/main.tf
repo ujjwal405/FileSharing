@@ -4,7 +4,7 @@ resource "aws_api_gateway_method" "methods" {
   resource_id   = var.resource_ids[each.value.resource_name]
   http_method   = each.value.http_method
   authorization = each.value.use_authorizer ? "CUSTOM" : "NONE"
-  authorizer_id = each.value.use_authorizer == true ? aws_api_gateway_authorizer.lambda_authorizer.id : null
+  authorizer_id = each.value.use_authorizer == true ? var.authorizer_id : null
 }
 
 resource "aws_api_gateway_integration" "integrations" {

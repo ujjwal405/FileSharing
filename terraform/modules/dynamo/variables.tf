@@ -31,3 +31,8 @@ variable "attributes" {
   }))
   description = "List of attributes for the DynamoDB table"
 }
+
+variable "prevent_destroy" {
+  type    = bool
+  default = false
+}

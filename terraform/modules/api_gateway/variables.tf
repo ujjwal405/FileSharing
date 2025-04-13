@@ -1,3 +1,6 @@
+variable "api_name" {}
+
+
 variable "endpoint_type" {
   type    = string
   default = "REGIONAL"

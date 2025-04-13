@@ -15,6 +15,14 @@ resource "aws_lambda_function" "this" {
 
   role = var.lambda_role_arn
 
+  dynamic "environment" {
+    for_each = length(var.environment_variables) > 0 ? [1] : []
+    content {
+      variables = var.environment_variables
+    }
+  }
+
+
 }
 
 

@@ -31,7 +31,8 @@ func init() {
 func handleLogout(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	authorizer := event.RequestContext.Authorizer
 	username, _ := authorizer["username"].(string)
-	if err := lambdaHandler.LogoutHandler(ctx, username); err != nil {
+	googleLogin, _ := authorizer["google_login"].(string)
+	if err := lambdaHandler.LogoutHandler(ctx, username, googleLogin); err != nil {
 		log.Printf("failed to handle Logout User: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: 500,

@@ -10,21 +10,21 @@ resource "aws_cognito_user_pool" "myPool" {
     name                = "first_name"
     attribute_data_type = "String"
     mutable             = true
-    required            = false
+    required            = true
   }
 
   schema {
     name                = "last_name"
     attribute_data_type = "String"
     mutable             = true
-    required            = false
+    required            = true
   }
 
   schema {
     name                = "google_login"
     attribute_data_type = "Boolean"
     mutable             = true
-    required            = false
+    required            = true
   }
 
   password_policy {
