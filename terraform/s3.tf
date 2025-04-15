@@ -7,7 +7,7 @@ module "s3_file_upload" {
 }
 
 // creating s3 bucket for hosting static website
-module "s3_static_website" {
+/* module "s3_static_website" {
   source                  = "./modules/s3"
   bucket_name             = var.s3_static_website
   force_destroy           = true
@@ -18,4 +18,4 @@ module "s3_static_website" {
   enable_static_website   = true
   enable_public_access    = true
 
-}
+} */

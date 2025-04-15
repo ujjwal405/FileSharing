@@ -5,11 +5,12 @@ variable "aws_region" {
 
 variable "s3_file_upload" {}
 
-variable "s3_static_website" {}
 
 variable "dynamo_file_meta_data" {}
 
 variable "dynamo_file_meta_data_hash_key" {}
+
+variable "dynamo_file_meta_data_range_key" {}
 
 variable "dynamo_file_meta_data_read_capacity" {
   type = int

@@ -21,9 +21,9 @@ func (h *VerifyHandler) VerifyHandler(ctx context.Context, confirmInput user.Use
 		return err
 	}
 
-	if err := h.cognitoClient.SetEmailVerified(ctx, confirmInput.Email); err != nil {
+	/* 	if err := h.cognitoClient.SetEmailVerified(ctx, confirmInput.Email); err != nil {
 		return err
-	}
+	} */
 	return nil
 
 }

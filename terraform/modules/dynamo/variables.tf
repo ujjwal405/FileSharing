@@ -14,6 +14,13 @@ variable "hash_key" {
   description = "The name of hash key"
 }
 
+
+variable "range_key" {
+  type    = string
+  default = null
+}
+
+
 variable "read_capacity" {
   type        = int
   description = "The read capacity of table"
