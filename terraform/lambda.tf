@@ -49,9 +49,7 @@ module "lambda_download_signed_url" {
   function_timeout = var.function_timeout
   lambda_role_arn  = module.iam_role_download_signed_url.role_arn
 
-  environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
-  }
+  environment_variables = var.download_signed_url_env
 }
 
 
@@ -178,9 +176,7 @@ module "lambda_upload_signed_url" {
   function_timeout = var.function_timeout
   lambda_role_arn  = module.iam_role_upload_signed_url.role_arn
 
-  environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
-  }
+  environment_variables = var.upload_signed_url_env
 }
 
 // Lambda function for get_code
