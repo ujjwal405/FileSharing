@@ -43,7 +43,10 @@ func handleGoogleSignIn(ctx context.Context, event events.APIGatewayProxyRequest
 			Body: "Internal Server Error",
 		}, nil
 	}
-	url := googleOauthConfig.AuthCodeURL(state_token, oauth2.AccessTypeOffline)
+	url := googleOauthConfig.AuthCodeURL(state_token,
+		oauth2.AccessTypeOffline,
+		oauth2.SetAuthURLParam("prompt", "select_account"),
+	)
 	responseBody, err := json.Marshal(map[string]string{
 		"url": url,
 	})
