@@ -25,29 +25,29 @@ func NewLambdaHandler(googleOauthConfig *my_google.GoogleConfig, cognitoClient *
 	}
 }
 
-func (h *LambdaHandler) HandleGoogleCallback(ctx context.Context, code string, stateToken string) (string, string, error) {
+func (h *LambdaHandler) HandleGoogleCallback(ctx context.Context, code string, stateToken string) (string, string, string, error) {
 	if err := helper.VerifyStateToken(stateToken, h.secretKey); err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	email, givenName, familyName, err := h.googleOauthConfig.Callback(ctx, code)
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	exist, err := h.cognitoClient.CheckUser(ctx, email)
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	if exist {
-		return "", "", helper.UserAlreadyExistsError()
+		return "", "", "", helper.UserAlreadyExistsError()
 	}
 	temp_pass := helper.GenerateTemporaryPassword()
 	err = h.cognitoClient.CreateUser(ctx, email, givenName, familyName, temp_pass)
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	user_token, err := h.cognitoClient.Authenticate(ctx, email, temp_pass)
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	expires_at := helper.GenerateExpiryTime()
 
@@ -55,9 +55,9 @@ func (h *LambdaHandler) HandleGoogleCallback(ctx context.Context, code string, s
 		if delErr := h.cognitoClient.DeleteUser(ctx, email); delErr != nil {
 			err = delErr
 		}
-		return "", "", err
+		return "", "", "", err
 	}
 
-	return user_token.IDToken, user_token.AccessToken, nil
+	return user_token.IDToken, user_token.AccessToken, email, nil
 
 }

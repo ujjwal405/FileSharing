@@ -40,7 +40,7 @@ func init() {
 }
 
 func handleGoogleCallback(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	IdToken, AccessToken, err := lambdaHandler.HandleGoogleCallback(ctx, event.QueryStringParameters["code"], event.QueryStringParameters["state"])
+	IdToken, AccessToken, email, err := lambdaHandler.HandleGoogleCallback(ctx, event.QueryStringParameters["code"], event.QueryStringParameters["state"])
 	if err != nil {
 		log.Printf("failed to handle google callback: %v", err.Error())
 		if apiErr, ok := err.(helper.APIError); ok {
@@ -65,6 +65,7 @@ func handleGoogleCallback(ctx context.Context, event events.APIGatewayProxyReque
 	responseBody, _ := json.Marshal(map[string]string{
 		"id_token":     IdToken,
 		"access_token": AccessToken,
+		"email":        email,
 	})
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
