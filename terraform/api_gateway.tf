@@ -111,14 +111,14 @@ module "api_method" {
     },
     {
       resource_name = "/getCode"
-      http_method   = "GET"
+      http_method   = "POST"
       lambda_arn    = module.lambda_get_code.invoke_arn
 
 
     },
     {
       resource_name = "/googleCallback"
-      http_method   = "GET"
+      http_method   = "POST"
       lambda_arn    = module.lambda_google_callback.invoke_arn
 
     },
@@ -201,6 +201,6 @@ module "cors" {
   api_resource_id = each.value
   allow_headers   = var.allow_headers
   allow_methods   = var.allow_methods
-  allow_origin    = module.s3_static_website.website_endpoint
+  allow_origin    = "https://filesharing.ujjwalsilwal123.com.np"
 }
 

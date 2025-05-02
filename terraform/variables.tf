@@ -71,9 +71,7 @@ variable "google_client_secret" {}
 
 variable "google_redirect_url" {}
 
-variable "function_timeout" {
-  type = number
-}
+
 
 variable "function_timeout" {
   type    = number
