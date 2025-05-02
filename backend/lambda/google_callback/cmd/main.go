@@ -13,6 +13,7 @@ import (
 	"github.com/ujjwal405/FileSharing/google_callback/handler"
 	"github.com/ujjwal405/FileSharing/google_callback/helper"
 	secret_manager "github.com/ujjwal405/FileSharing/google_callback/secret_manager"
+	"github.com/ujjwal405/FileSharing/google_callback/token"
 )
 
 var lambdaHandler *handler.LambdaHandler
@@ -40,7 +41,9 @@ func init() {
 }
 
 func handleGoogleCallback(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	IdToken, AccessToken, email, err := lambdaHandler.HandleGoogleCallback(ctx, event.QueryStringParameters["code"], event.QueryStringParameters["state"])
+	var usrToken token.Token
+	_ = json.Unmarshal([]byte(event.Body), &usrToken)
+	IdToken, AccessToken, email, err := lambdaHandler.HandleGoogleCallback(ctx, usrToken.Code, usrToken.State)
 	if err != nil {
 		log.Printf("failed to handle google callback: %v", err.Error())
 		if apiErr, ok := err.(helper.APIError); ok {
