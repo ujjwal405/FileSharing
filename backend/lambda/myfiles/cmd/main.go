@@ -12,6 +12,7 @@ import (
 	"github.com/ujjwal405/FileSharing/myfiles/dynamo_db"
 	"github.com/ujjwal405/FileSharing/myfiles/file"
 	"github.com/ujjwal405/FileSharing/myfiles/handler"
+	"github.com/ujjwal405/FileSharing/myfiles/page"
 )
 
 var lambdaHandler *handler.GetFileHandler
@@ -30,9 +31,11 @@ func handleGetFiles(ctx context.Context, event events.APIGatewayProxyRequest) (e
 	accessToken, accessTokenExists := authContext["access_token"].(string)
 	idToken, idTokenExists := authContext["id_token"].(string)
 
-	pageStr := event.QueryStringParameters["page"]
+	//pageStr := event.QueryStringParameters["page"]
+	var pageStr page.Page
+	_ = json.Unmarshal([]byte(event.Body), &pageStr)
 
-	paginatedFiles, err := lambdaHandler.HandleGetFiles(ctx, pageStr, username)
+	paginatedFiles, err := lambdaHandler.HandleGetFiles(ctx, pageStr.PageNo, username)
 	if err != nil {
 		log.Printf("failed to handle get files: %v", err.Error())
 		if apiErr, ok := err.(apiError.APIError); ok {
