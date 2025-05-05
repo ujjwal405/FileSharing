@@ -1,0 +1,38 @@
+name: "CICD Pipeline"
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "!README.md"
+
+jobs:
+  gitleaks-scan:
+    uses: ./.github/workflows/gitleaks-scan.yml
+
+  snyk-golang-scan:
+    needs: gitleaks-scan
+    uses: ./.github/workflows/snyk-golang-scan.yml
+
+  snyk-terraform-scan:
+    needs: snyk-golang-scan
+    uses: ./.github/workflows/snyk-terraform-scan.yml
+
+  terraform-cd:
+    needs: snyk-terraform-scan
+    uses: ./.github/workflows/cd.yml
+    secrets: inherit
+
+  slack:
+    needs: [gitleaks-scan, snyk-golang-scan, snyk-terraform-scan, terraform-cd]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Slack Notification
+        uses: act10ns/slack@v2
+        with:
+          channel: "#ci"
+          status: ${{ job.status }}
+          steps: ${{ toJson(needs) }}
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}

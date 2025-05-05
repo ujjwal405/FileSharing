@@ -1,0 +1,58 @@
+name: "Snyk Golang Scan"
+on:
+  workflow_call:
+
+permissions:
+  security-events: write
+  contents: read
+
+jobs:
+  discover-lambdas:
+    runs-on: ubuntu-latest
+    outputs:
+      lambda-list: ${{ steps.get-lambdas.outputs.lambdas }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Find Lambda directories
+        id: get-lambdas
+        run: |
+          cd backend/lambda || exit 1
+          dirs=$(find . -maxdepth 1 -mindepth 1 -type d ! -name '.*' -printf '%f\n')
+          echo "lambdas=$([ -n "$dirs" ] && echo "$dirs" | jq -R -s -c 'split("\n") | map(select(. != ""))')" >> $GITHUB_OUTPUT
+
+  snyk-scan:
+    needs: discover-lambdas
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lambda: ${{ fromJSON(needs.discover-lambdas.outputs.lambda-list) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+
+      - name: Run Snyk for ${{ matrix.lambda }}
+        id: snyk
+        uses: snyk/actions/golang@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: >-
+            --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
+            --severity-threshold=high
+            --fail-on=all
+          sarif: false
+          file: backend/lambda/${{ matrix.lambda }}
+
+      - name: Upload SARIF results
+        if: steps.snyk.outcome == 'failure'
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
