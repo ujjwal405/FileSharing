@@ -1,7 +1,6 @@
 
 data "aws_caller_identity" "current" {}
 
-// use module to enable cors
 resource "null_resource" "get_lambda_dirs" {
   triggers = {
     always_run = timestamp()
