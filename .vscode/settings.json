@@ -5,5 +5,10 @@
     },
     "[terraform]": {
         "editor.defaultFormatter": "hashicorp.terraform"
-    }
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+      }
 }
