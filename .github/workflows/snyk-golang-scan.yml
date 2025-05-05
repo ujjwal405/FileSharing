@@ -46,10 +46,9 @@ jobs:
         with:
           args: >-
             test backend/lambda/${{ matrix.lambda }}
-      --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
-      --severity-threshold=high
-      --fail-on=all
-          file: backend/lambda/${{ matrix.lambda }}
+            --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
+            --severity-threshold=high
+            --fail-on=all
 
       - name: Upload SARIF results
         if: steps.snyk.outcome == 'failure'
