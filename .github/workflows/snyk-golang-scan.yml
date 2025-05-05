@@ -45,9 +45,10 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: >-
-            --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
-            --severity-threshold=high
-            --fail-on=all
+            test backend/lambda/${{ matrix.lambda }}
+      --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
+      --severity-threshold=high
+      --fail-on=all
           file: backend/lambda/${{ matrix.lambda }}
 
       - name: Upload SARIF results
