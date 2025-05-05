@@ -29,7 +29,6 @@ jobs:
             --sarif-file-output=terraform/terraform-snyk.sarif
             --severity-threshold=high
             --fail-on=all
-          sarif: false
           file: .terraform/
 
       - name: Upload SARIF results

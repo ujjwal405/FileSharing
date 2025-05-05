@@ -12,6 +12,10 @@ permissions:
   contents: read
   id-token: write
 
+concurrency:
+  group: "master-${{ github.ref }}"
+  cancel-in-progress: true
+
 jobs:
   gitleaks-scan:
     uses: ./.github/workflows/gitleaks-scan.yml
@@ -41,3 +45,4 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(needs) }}
           webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          config: .github/config/slack.yml

@@ -48,7 +48,6 @@ jobs:
             --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
             --severity-threshold=high
             --fail-on=all
-          sarif: false
           file: backend/lambda/${{ matrix.lambda }}
 
       - name: Upload SARIF results
