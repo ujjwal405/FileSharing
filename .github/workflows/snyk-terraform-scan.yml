@@ -1,6 +1,9 @@
 name: "Snyk Terraform Scan"
 on:
   workflow_call:
+    secrets:
+      SNYK_TOKEN:
+        required: true
 
 permissions:
   security-events: write
