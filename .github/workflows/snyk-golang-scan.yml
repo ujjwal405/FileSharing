@@ -43,22 +43,24 @@ jobs:
       - name: Install Go dependencies
         run: |
           cd backend/lambda/${{ matrix.lambda }}
+          go mod tidy
           go mod download
 
-      - name: Run Snyk for ${{ matrix.lambda }}
+      - name: Install Snyk CLI
+        uses: snyk/actions/setup@master
+
+      - name: Run Snyk Scan
         id: snyk
-        uses: snyk/actions/golang@master
-        continue-on-error: true
+        run: |
+          cd backend/lambda/${{ matrix.lambda }}
+          snyk test \
+            --file=go.mod \
+            --sarif-file-output=${{ matrix.lambda }}-snyk.sarif \
+            --severity-threshold=high \
+            --fail-on=all
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           GOFLAGS: "-mod=mod"
-        with:
-          args: >-
-            test
-            --file=backend/lambda/${{ matrix.lambda }}/go.mod
-            --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
-            --severity-threshold=high
-            --fail-on=all
 
       - name: Check if SARIF file exists
         id: sarif-check
@@ -71,7 +73,7 @@ jobs:
           fi
 
       - name: Upload SARIF results
-        if: always()
+        if: steps.snyk.conclusion == 'success' && steps.sarif-check.outputs.exists == 'true'
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
