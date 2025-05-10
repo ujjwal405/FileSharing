@@ -51,9 +51,10 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          GOFLAGS: "-mod=mod"
         with:
           args: >-
-            test backend/lambda/${{ matrix.lambda }}
+            test
             --file=backend/lambda/${{ matrix.lambda }}/go.mod
             --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
             --severity-threshold=high
@@ -70,7 +71,7 @@ jobs:
           fi
 
       - name: Upload SARIF results
-        if: steps.snyk.conclusion == 'success' && steps.sarif-check.outputs.exists == 'true'
+        if: always()
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
