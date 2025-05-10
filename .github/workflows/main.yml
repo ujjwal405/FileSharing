@@ -43,6 +43,6 @@ jobs:
         with:
           channel: "#ci"
           status: ${{ job.status }}
-          steps: ${{ toJson(needs) }}
+          steps: ${{ toJson(steps) }}
           webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           config: .github/config/slack.yml
