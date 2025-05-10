@@ -51,8 +51,8 @@ resource "aws_cognito_user_pool" "myPool" {
 resource "aws_cognito_user_pool_client" "myClient" {
   name                  = "my-app-client"
   user_pool_id          = aws_cognito_user_pool.myPool.id
-  access_token_validity = 3600 # Access token validity in seconds (e.g., 1 hour)
-  id_token_validity     = 3600
+  access_token_validity = var.access_token_validity
+  id_token_validity     = var.id_token_validity
 
   # Specify attributes the app client can write to
   write_attributes = [
