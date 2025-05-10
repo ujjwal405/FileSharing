@@ -44,7 +44,6 @@ jobs:
       - name: Determine overall CI status
         id: get_status
         run: |
-          # default to success
           echo "status=success" >> $GITHUB_OUTPUT
 
           # if any needed job did _not_ succeed, flip to failure
