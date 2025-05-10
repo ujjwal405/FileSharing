@@ -23,10 +23,12 @@ jobs:
   snyk-golang-scan:
     needs: gitleaks-scan
     uses: ./.github/workflows/snyk-golang-scan.yml
+    secrets: inherit
 
   snyk-terraform-scan:
     needs: snyk-golang-scan
     uses: ./.github/workflows/snyk-terraform-scan.yml
+    secrets: inherit
 
   terraform-cd:
     needs: snyk-terraform-scan
@@ -42,7 +44,14 @@ jobs:
         uses: act10ns/slack@v2
         with:
           channel: "#ci"
-          status: ${{ job.status }}
+          status: "${{
+            needs.gitleaks-scan.result == 'failure' ||
+            needs.snyk-golang-scan.result == 'failure' ||
+            needs.snyk-terraform-scan.result == 'failure' ||
+            needs.terraform-cd.result == 'failure'
+            ? 'failure'
+            : 'success'
+            }}"
           steps: ${{ toJson(steps) }}
           webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           config: .github/config/slack.yml
