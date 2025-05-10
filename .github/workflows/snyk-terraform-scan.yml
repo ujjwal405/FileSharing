@@ -16,11 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "1.21"
-
       - name: Run Snyk for terraform
         id: snyk
         uses: snyk/actions/iac@master
@@ -32,7 +27,7 @@ jobs:
             --sarif-file-output=terraform/terraform-snyk.sarif
             --severity-threshold=high
             --fail-on=all
-          file: .terraform/
+          file: terraform/
 
       - name: Upload SARIF results
         if: steps.snyk.outcome == 'failure'

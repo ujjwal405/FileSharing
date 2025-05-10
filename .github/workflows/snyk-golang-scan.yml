@@ -40,6 +40,11 @@ jobs:
         with:
           go-version: "1.21"
 
+      - name: Install Go dependencies
+        run: |
+          cd backend/lambda/${{ matrix.lambda }}
+          go mod download
+
       - name: Run Snyk for ${{ matrix.lambda }}
         id: snyk
         uses: snyk/actions/golang@master
@@ -49,6 +54,7 @@ jobs:
         with:
           args: >-
             test backend/lambda/${{ matrix.lambda }}
+            --file=backend/lambda/${{ matrix.lambda }}/go.mod
             --sarif-file-output=backend/lambda/${{ matrix.lambda }}/${{ matrix.lambda }}-snyk.sarif
             --severity-threshold=high
             --fail-on=all
