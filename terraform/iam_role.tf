@@ -61,7 +61,7 @@ module "iam_role_download_signed_url" {
 
 
 // IAM role for forget_password
-module "iam_role_download_signed_url" {
+module "iam_role_forget_password" {
   source      = "./modules/iam/lambda"
   lambda_name = "forget_password"
   env_name    = var.env_name

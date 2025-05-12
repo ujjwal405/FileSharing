@@ -22,12 +22,12 @@ variable "range_key" {
 
 
 variable "read_capacity" {
-  type        = int
+  type        = number
   description = "The read capacity of table"
 }
 
 variable "write_capacity" {
-  type        = int
+  type        = number
   description = "The write capacity of table"
 }
 
