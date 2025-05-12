@@ -9,7 +9,7 @@ resource "aws_dynamodb_table" "my_table" {
   billing_mode   = "PAY_PER_REQUEST"
   read_capacity  = var.read_capacity
   write_capacity = var.write_capacity
-  range_key = var.range_key != null ? var.range_key : null
+  range_key      = var.range_key != null ? var.range_key : null
 
   dynamic "attribute" {
     for_each = var.attributes
@@ -19,6 +19,6 @@ resource "aws_dynamodb_table" "my_table" {
     }
   }
   lifecycle {
-    prevent_destroy = var.prevent_destroy
+    prevent_destroy = false
   }
 }

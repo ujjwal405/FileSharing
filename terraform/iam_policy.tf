@@ -77,7 +77,7 @@ module "iam_policy_cognito_forget_password" {
 
 
 // IAM policy for cognitoRevokeToken
-module "iam_policy_cognito_forget_password" {
+module "iam_policy_cognito_revoke_token" {
   source      = "./modules/iam/policy"
   policy_name = "cognito_revoke_token"
   env_name    = var.env_name
