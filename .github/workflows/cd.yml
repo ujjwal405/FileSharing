@@ -1,6 +1,17 @@
 name: "Terraform CD"
 on:
   workflow_call:
+    secrets:
+      GOOGLE_CLIENT_ID:
+        required: true
+      GOOGLE_CLIENT_SECRET:
+        required: true
+      GOOGLE_REDIRECT_URL:
+        required: true
+      AWS_ROLE_ARN:
+        required: true
+      AWS_REGION:
+        required: true
 
 permissions:
   id-token: write
