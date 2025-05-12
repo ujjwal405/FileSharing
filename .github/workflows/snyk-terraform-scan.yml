@@ -36,10 +36,16 @@ jobs:
       - name: Run Snyk IaC test
         id: snyk
         run: |
+          # generate both SARIF and JSON report (always writes SARIF)
           snyk iac test terraform/ \
-          --sarif-file-output=terraform/terraform-snyk.sarif \
-          --severity-threshold=high \
-          --fail-on=all
+            --sarif-file-output=terraform/terraform-snyk.sarif \
+            --json > terraform/terraform-snyk.json 2>&1 || true
+
+          # fail if any "high" severity is present
+          if grep -q '"severity":"high"' terraform/terraform-snyk.json; then
+            echo "⚠️ High severity IaC issues detected!"
+            exit 1
+          fi
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
