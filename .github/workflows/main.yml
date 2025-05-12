@@ -11,6 +11,7 @@ permissions:
   security-events: write
   contents: read
   id-token: write
+  actions: read
 
 concurrency:
   group: "master-${{ github.ref }}"
