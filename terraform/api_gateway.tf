@@ -1,8 +1,3 @@
-data "aws_api_gateway_resources" "all" {
-  rest_api_id = module.file_sharing_gateway.rest_api_id
-}
-
-
 // creating api_gateway
 module "file_sharing_gateway" {
   source        = "./modules/api_gateway"
