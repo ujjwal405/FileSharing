@@ -36,13 +36,13 @@ variable "dynamo_file_meta_data_hash_key" {}
 
 variable "dynamo_file_meta_data_range_key" {}
 
-variable "dynamo_file_meta_data_read_capacity" {
-  type = number
-}
+# variable "dynamo_file_meta_data_read_capacity" {
+#   type = number
+# }
 
-variable "dynamo_file_meta_data_write_capacity" {
-  type = number
-}
+# variable "dynamo_file_meta_data_write_capacity" {
+#   type = number
+# }
 
 variable "dynamo_user_meta_data" {}
 
@@ -55,13 +55,13 @@ variable "dynamo_user_meta_data_attributes" {
 
 variable "dynamo_user_meta_data_hash_key" {}
 
-variable "dynamo_user_meta_data_read_capacity" {
-  type = number
-}
+# variable "dynamo_user_meta_data_read_capacity" {
+#   type = number
+# }
 
-variable "dynamo_user_meta_data_write_capacity" {
-  type = number
-}
+# variable "dynamo_user_meta_data_write_capacity" {
+#   type = number
+# }
 
 variable "endpoint_type" {}
 

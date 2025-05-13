@@ -19,10 +19,10 @@ dynamo_file_meta_data_attributes = [
   { name = "email", type = "S" },
   # { name = "filename", type = "S" }
 ]
-dynamo_file_meta_data_hash_key       = "email"
-dynamo_file_meta_data_range_key      = "created_at"
-dynamo_file_meta_data_read_capacity  = 5
-dynamo_file_meta_data_write_capacity = 5
+dynamo_file_meta_data_hash_key  = "email"
+dynamo_file_meta_data_range_key = "created_at"
+# dynamo_file_meta_data_read_capacity  = 5
+# dynamo_file_meta_data_write_capacity = 5
 
 dynamo_user_meta_data = "UserTable"
 dynamo_user_meta_data_attributes = [
@@ -39,9 +39,9 @@ dynamo_user_meta_data_attributes = [
   #   type = "N"
   # }
 ]
-dynamo_user_meta_data_hash_key       = "email"
-dynamo_user_meta_data_read_capacity  = 5
-dynamo_user_meta_data_write_capacity = 5
+dynamo_user_meta_data_hash_key = "email"
+# dynamo_user_meta_data_read_capacity  = 5
+# dynamo_user_meta_data_write_capacity = 5
 
 endpoint_type = "REGIONAL"
 

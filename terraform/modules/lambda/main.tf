@@ -1,7 +1,7 @@
 locals {
   # source_dir = "${path.module}/../../../backend/lambda/${var.lambda_name}/bootstrap"
   #   output_path = "${path.module}/../../../backend/lambda/${var.lambda_name}"
-  output_path = "${path.module}/../../../backend/lambda"
+  output_path = "${path.module}/../../../backend/lambda/${var.lambda_name}"
 
 }
 

@@ -1,3 +1,8 @@
+locals {
+  cors_ids = values(module.api_resource.resource_ids)
+  cors_cnt = length(local.cors_ids)
+}
+
 // creating api_gateway
 module "file_sharing_gateway" {
   source        = "./modules/api_gateway"
@@ -208,11 +213,10 @@ module "api_stage" {
 module "cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
-
-  for_each = { for r in module.api_resource.resource_ids : r.path => r.id }
+  count   = local.cors_cnt
 
   api_id          = module.file_sharing_gateway.rest_api_id
-  api_resource_id = each.value
+  api_resource_id = local.cors_ids[count.index]
   allow_headers   = var.allow_headers
   allow_methods   = var.allow_methods
   allow_origin    = "https://filesharing.ujjwalsilwal123.com.np"

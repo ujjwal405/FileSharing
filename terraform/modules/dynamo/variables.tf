@@ -21,15 +21,15 @@ variable "range_key" {
 }
 
 
-variable "read_capacity" {
-  type        = number
-  description = "The read capacity of table"
-}
+# variable "read_capacity" {
+#   type        = number
+#   description = "The read capacity of table"
+# }
 
-variable "write_capacity" {
-  type        = number
-  description = "The write capacity of table"
-}
+# variable "write_capacity" {
+#   type        = number
+#   description = "The write capacity of table"
+# }
 
 variable "attributes" {
   type = list(object({
