@@ -31,12 +31,18 @@ resource "null_resource" "build_lambdas" {
 
   provisioner "local-exec" {
     command = <<EOT
-      for dir in ${join(" ", local.lambda_dirs)}; do  # Iterate over each directory in the list
-        echo "Processing Lambda in directory: $dir"
-        cd "$(pwd)/../backend/lambda/$dir/cmd"  # Change into the Lambda function directory
-        GOOS=linux GOARCH=amd64 go build -o bootstrap main.go  # Build the Lambda function
-        mkdir -p "$(pwd)/../../$dir/bootstrap" #Create the directory.
-        mv bootstrap.zip "$(pwd)/../../$dir/bootstrap/bootstrap.zip"
+      set -e
+      for dir in ${join(" ", local.lambda_dirs)}; do
+        LAMBDADIR=$(pwd)/../backend/lambda/$dir
+        echo "🔨 Building $dir…"
+        cd "$LAMBDADIR/cmd"
+        GOOS=linux GOARCH=amd64 go build -o bootstrap main.go
+
+        echo "🗜 Zipping $dir…"
+        mkdir -p "$LAMBDADIR/bootstrap"
+        zip -j "$LAMBDADIR/bootstrap/bootstrap.zip" bootstrap
+
+        echo "✅ Built $dir/bootstrap/bootstrap.zip"
       done
     EOT
   }

@@ -15,9 +15,11 @@ resource "aws_iam_role" "this" {
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
-  for_each   = toset(var.lambda_policy_arns)
-  role       = aws_iam_role.this.name
-  policy_arn = each.value
+  # for_each   = toset(var.lambda_policy_arns)
+  count = length(var.lambda_policy_arns)
+  role  = aws_iam_role.this.name
+  # policy_arn = each.value
+  policy_arn = var.lambda_policy_arns[count.index]
 }
 
 

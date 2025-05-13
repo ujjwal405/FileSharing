@@ -1,4 +1,4 @@
-access_token_validity = 3600
+access_token_validity = 60
 
 allow_headers = ["Content-Type", "Authorization", "X-Id-Token"]
 allow_methods = ["GET", "POST", "OPTIONS"]
@@ -14,10 +14,10 @@ download_signed_url_env = {
 
 dynamo_file_meta_data = "FileTable"
 dynamo_file_meta_data_attributes = [
-  { name = "s3filename", type = "S" },
+  # { name = "s3filename", type = "S" },
   { name = "created_at", type = "S" },
   { name = "email", type = "S" },
-  { name = "filename", type = "S" }
+  # { name = "filename", type = "S" }
 ]
 dynamo_file_meta_data_hash_key       = "email"
 dynamo_file_meta_data_range_key      = "created_at"
@@ -30,14 +30,14 @@ dynamo_user_meta_data_attributes = [
     name = "email"
     type = "S"
   },
-  {
-    name = "refresh_token"
-    type = "S"
-  },
-  {
-    name = "expires_at"
-    type = "N"
-  }
+  # {
+  #   name = "refresh_token"
+  #   type = "S"
+  # },
+  # {
+  #   name = "expires_at"
+  #   type = "N"
+  # }
 ]
 dynamo_user_meta_data_hash_key       = "email"
 dynamo_user_meta_data_read_capacity  = 5
@@ -45,7 +45,7 @@ dynamo_user_meta_data_write_capacity = 5
 
 endpoint_type = "REGIONAL"
 
-id_token_validity = 3600
+id_token_validity = 60
 
 s3_file_upload = "FileUploadBucket"
 

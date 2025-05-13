@@ -1,3 +1,8 @@
+data "aws_api_gateway_resources" "all" {
+  rest_api_id = module.file_sharing_gateway.rest_api_id
+}
+
+
 // creating api_gateway
 module "file_sharing_gateway" {
   source        = "./modules/api_gateway"
@@ -191,11 +196,26 @@ module "api_stage" {
 
 
 // enable cors
-module "cors" {
-  for_each = module.api_resource.resource_ids
+# module "cors" {
+#   for_each = module.api_resource.resource_ids
 
+#   source  = "squidfunk/api-gateway-enable-cors/aws"
+#   version = "0.3.3"
+
+#   api_id          = module.file_sharing_gateway.rest_api_id
+#   api_resource_id = each.value
+#   allow_headers   = var.allow_headers
+#   allow_methods   = var.allow_methods
+#   allow_origin    = "https://filesharing.ujjwalsilwal123.com.np"
+# }
+
+
+module "cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
+
+  # now known at plan time
+  for_each = { for r in data.aws_api_gateway_resources.all.resources : r.path => r.id }
 
   api_id          = module.file_sharing_gateway.rest_api_id
   api_resource_id = each.value
@@ -203,4 +223,3 @@ module "cors" {
   allow_methods   = var.allow_methods
   allow_origin    = "https://filesharing.ujjwalsilwal123.com.np"
 }
-
