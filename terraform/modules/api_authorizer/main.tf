@@ -3,7 +3,7 @@ resource "aws_api_gateway_authorizer" "lambda_authorizer" {
   rest_api_id     = var.rest_api_id
   authorizer_uri  = var.authorizer_uri
   type            = "REQUEST"
-  identity_source = ["method.request.header.Authorization", "method.request.header.X-Id-Token"]
+  identity_source = "method.request.header.Authorization,method.request.header.X-Id-Token"
 }
 
 resource "aws_lambda_permission" "authorizer" {

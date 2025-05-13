@@ -84,7 +84,7 @@ module "api_resource" {
 module "api_method" {
   source        = "./modules/api_method"
   rest_api_id   = module.file_sharing_gateway.rest_api_id
-  resource_ids  = module.api_resources.resource_ids
+  resource_ids  = module.api_resource.resource_ids
   authorizer_id = module.api_authorizer.authorizer_id
   methods = [
     {
@@ -132,7 +132,7 @@ module "api_method" {
     {
       resource_name  = "/myfiles"
       http_method    = "GET"
-      lambda_arn     = module.lambda_my_files.invoke_arn
+      lambda_arn     = module.lambda_myfiles.invoke_arn
       use_authorizer = true
 
     },
@@ -158,7 +158,7 @@ module "api_method" {
     {
       resource_name  = "/uploadMetaData"
       http_method    = "POST"
-      lambda_arn     = module.lambda_upload_meta_data.invoke_arn
+      lambda_arn     = module.lambda_upload_metadata.invoke_arn
       use_authorizer = true
 
     },
@@ -192,7 +192,7 @@ module "api_stage" {
 
 // enable cors
 module "cors" {
-  for_each = module.api_resources.resource_ids
+  for_each = module.api_resource.resource_ids
 
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"

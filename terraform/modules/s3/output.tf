@@ -4,6 +4,6 @@ output "s3_bucket_arn" {
   sensitive   = true
 }
 
-output "website_endpoint" {
-  value = aws_s3_bucket.this.website_endpoint
-}
+# output "website_endpoint" {
+#   value = aws_s3_bucket.this.website_endpoint
+# }
