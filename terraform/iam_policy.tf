@@ -255,7 +255,7 @@ module "iam_policy_secret_manager_get_item_cognito_region" {
     {
       "Effect" : "Allow",
       "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module_secret_manager_cognito_region.secret_arn]
+      "Resource" : [module.secret_manager_cognito_region.secret_arn]
     }
   ]
 }
@@ -270,7 +270,7 @@ module "iam_policy_secret_manager_get_item_app_client_id" {
     {
       "Effect" : "Allow",
       "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module_secret_manager_app_client_id.secret_arn]
+      "Resource" : [module.secret_manager_app_client_id.secret_arn]
     }
   ]
 }

@@ -197,7 +197,7 @@ module "cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
 
-  api_id          = module.api_gateway.rest_api_id
+  api_id          = module.file_sharing_gateway.rest_api_id
   api_resource_id = each.value
   allow_headers   = var.allow_headers
   allow_methods   = var.allow_methods
