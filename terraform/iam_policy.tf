@@ -285,7 +285,7 @@ module "iam_policy_secret_manager_get_item_user_pool_id" {
     {
       "Effect" : "Allow",
       "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module_secret_manager_user_pool_id.secret_arn]
+      "Resource" : [module.secret_manager_user_pool_id.secret_arn]
     }
   ]
 }
@@ -299,7 +299,7 @@ module "iam_policy_secret_manager_get_item_dynamo_region" {
     {
       "Effect" : "Allow",
       "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module_secret_manager_dynamo_region.secret_arn]
+      "Resource" : [module.secret_manager_dynamo_region.secret_arn]
     }
   ]
 }
@@ -313,7 +313,7 @@ module "iam_policy_secret_manager_get_item_dynamo_user_table_name" {
     {
       "Effect" : "Allow",
       "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module_secret_manager_dynamo_user_table_name.secret_arn]
+      "Resource" : [module.secret_manager_dynamo_user_table_name.secret_arn]
     }
   ]
 }
@@ -329,7 +329,54 @@ module "iam_policy_secret_manager_get_item_dynamo_file_name" {
     {
       "Effect" : "Allow",
       "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module_secret_manager_dynamo_file_name.secret_arn]
+      "Resource" : [module.secret_manager_dynamo_file_name.secret_arn]
+    }
+  ]
+}
+
+
+// IAM policy for secretManagerGetItem
+module "iam_policy_secret_manager_get_item_google_client_id" {
+  source      = "./modules/iam/policy"
+  policy_name = "secret_manager_get_item_google_client_id"
+  env_name    = var.env_name
+  policy_statements = [
+    {
+      "Effect" : "Allow",
+      "Action" : ["secretsmanager:GetSecretValue"],
+      "Resource" : [module.secret_manager_google_client_id.secret_arn]
+    }
+  ]
+}
+
+
+
+
+
+
+module "iam_policy_secret_manager_get_item_google_client_secret" {
+  source      = "./modules/iam/policy"
+  policy_name = "secret_manager_get_item_google_client_secret"
+  env_name    = var.env_name
+  policy_statements = [
+    {
+      "Effect" : "Allow",
+      "Action" : ["secretsmanager:GetSecretValue"],
+      "Resource" : [module.secret_manager_google_client_secret.secret_arn]
+    }
+  ]
+}
+
+
+module "iam_policy_secret_manager_get_item_google_redirect_url" {
+  source      = "./modules/iam/policy"
+  policy_name = "secret_manager_get_item_google_redirect_url"
+  env_name    = var.env_name
+  policy_statements = [
+    {
+      "Effect" : "Allow",
+      "Action" : ["secretsmanager:GetSecretValue"],
+      "Resource" : [module.secret_manager_google_redirect_url.secret_arn]
     }
   ]
 }

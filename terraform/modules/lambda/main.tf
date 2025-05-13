@@ -10,7 +10,7 @@ resource "aws_lambda_function" "this" {
   runtime       = var.function_runtime
   timeout       = var.function_timeout
 
-  filename         = "${output_path}/${var.lambda_name}.zip"
+  filename         = "${local.output_path}/${var.lambda_name}.zip"
   source_code_hash = data.archive_file.this.output_base64sha256
 
   role = var.lambda_role_arn
@@ -29,5 +29,5 @@ resource "aws_lambda_function" "this" {
 data "archive_file" "this" {
   source_dir  = "${local.source_dir}/bootstrap.zip"
   type        = "zip"
-  output_path = "${output_path}/${var.lambda_name}.zip"
+  output_path = "${local.output_path}/${var.lambda_name}.zip"
 }
