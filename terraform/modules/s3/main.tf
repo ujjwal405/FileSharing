@@ -94,6 +94,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_rules" {
   rule {
     id     = "expire-old-objects"
     status = "Enabled"
+    filter {
+      # empty prefix = apply to all objects
+      prefix = ""
+
+    }
 
     transition {
       days          = 30
