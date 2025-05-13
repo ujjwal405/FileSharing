@@ -209,8 +209,7 @@ module "cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
 
-  # now known at plan time
-  for_each = { for r in data.aws_api_gateway_resources.all.resources : r.path => r.id }
+  for_each = { for r in module.api_resource.resource_ids : r.path => r.id }
 
   api_id          = module.file_sharing_gateway.rest_api_id
   api_resource_id = each.value
