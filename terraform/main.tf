@@ -40,9 +40,9 @@ resource "null_resource" "build_lambdas" {
 
         echo "🗜 Zipping $dir…"
         mkdir -p "$LAMBDADIR/bootstrap"
-        zip -j "$LAMBDADIR/bootstrap/bootstrap.zip" bootstrap
+        mv bootstrap "$LAMBDADIR/bootstrap/"
 
-        echo "✅ Built $dir/bootstrap/bootstrap.zip"
+        echo "✅ Moved to $dir/bootstrap/bootstrap"
       done
     EOT
   }

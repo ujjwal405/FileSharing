@@ -1,4 +1,4 @@
-access_token_validity = 60
+access_token_validity = 1
 
 allow_headers = ["Content-Type", "Authorization", "X-Id-Token"]
 allow_methods = ["GET", "POST", "OPTIONS"]
@@ -45,7 +45,7 @@ dynamo_user_meta_data_hash_key = "email"
 
 endpoint_type = "REGIONAL"
 
-id_token_validity = 60
+id_token_validity = 1
 
 s3_file_upload = "FileUploadBucket"
 
