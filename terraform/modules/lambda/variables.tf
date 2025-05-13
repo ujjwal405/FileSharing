@@ -30,3 +30,7 @@ variable "environment_variables" {
   type    = map(string)
   default = {} # Empty map
 }
+
+variable "depends_on" {
+  type = list(string)
+}

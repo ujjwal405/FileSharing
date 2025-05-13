@@ -11,6 +11,7 @@ resource "aws_lambda_function" "this" {
   handler       = "bootstrap" # Go functions use "bootstrap" as the handler
   runtime       = var.function_runtime
   timeout       = var.function_timeout
+  depends_on    = var.depends_on
 
   filename         = "${local.output_path}/${var.lambda_name}.zip"
   source_code_hash = data.archive_file.this.output_base64sha256
