@@ -38,5 +38,8 @@ jobs:
 
       - name: Terraform Destroy
         env:
+          TF_VAR_google_client_id: ${{ secrets.GOOGLE_CLIENT_ID }}
+          TF_VAR_google_client_secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          TF_VAR_google_redirect_url: ${{ secrets.GOOGLE_REDIRECT_URL }}
           TF_LOG: DEBUG
         run: terraform destroy -auto-approve
