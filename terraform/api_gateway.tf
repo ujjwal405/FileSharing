@@ -1,7 +1,39 @@
 locals {
-  cors_ids = values(module.api_resource.resource_ids)
-  cors_cnt = length(local.cors_ids)
+  # resource_path = [
+  #   "/codeVerification",
+  #   "/confirmPassword",
+  #   "/downloadSignedUrl",
+  #   "/forgetPassword",
+  #   "/getCode",
+  #   "/googleCallback",
+  #   "/logout",
+  #   "/myfiles",
+  #   "/signin",
+  #   "/signinGoogle",
+  #   "/signup",
+  #   "/uploadMetaData",
+  #   "/uploadSignedUrl"
+  # ]
+  full_resource_map = module.api_resource.resource_ids
+
+  cors_map = {
+    "/codeVerification"  = lookup(local.full_resource_map, "/codeVerification", null)
+    "/confirmPassword"   = lookup(local.full_resource_map, "/confirmPassword", null)
+    "/downloadSignedUrl" = lookup(local.full_resource_map, "/downloadSignedUrl", null)
+    "/forgetPassword"    = lookup(local.full_resource_map, "/forgetPassword", null)
+    "/getCode"           = lookup(local.full_resource_map, "/getCode", null)
+    "/googleCallback"    = lookup(local.full_resource_map, "/googleCallback", null)
+    "/logout"            = lookup(local.full_resource_map, "/logout", null)
+    "/myfiles"           = lookup(local.full_resource_map, "/myfiles", null)
+    "/signin"            = lookup(local.full_resource_map, "/signin", null)
+    "/signinGoogle"      = lookup(local.full_resource_map, "/signinGoogle", null)
+    "/signup"            = lookup(local.full_resource_map, "/signup", null)
+    "/uploadMetaData"    = lookup(local.full_resource_map, "/uploadMetaData", null)
+    "/uploadSignedUrl"   = lookup(local.full_resource_map, "/uploadSignedUrl", null)
+  }
+
 }
+
 
 // creating api_gateway
 module "file_sharing_gateway" {
@@ -82,7 +114,9 @@ module "api_resource" {
     }
 
   ]
+
 }
+
 
 
 // creating api_method
@@ -211,12 +245,12 @@ module "api_stage" {
 
 
 module "cors" {
-  source  = "squidfunk/api-gateway-enable-cors/aws"
-  version = "0.3.3"
-  count   = local.cors_cnt
+  source   = "squidfunk/api-gateway-enable-cors/aws"
+  version  = "0.3.3"
+  for_each = local.cors_map
 
   api_id          = module.file_sharing_gateway.rest_api_id
-  api_resource_id = local.cors_ids[count.index]
+  api_resource_id = each.value
   allow_headers   = var.allow_headers
   allow_methods   = var.allow_methods
   allow_origin    = "https://filesharing.ujjwalsilwal123.com.np"

@@ -6,3 +6,6 @@ variable "resources" {
     parent_id = string
   }))
 }
+
+
+
