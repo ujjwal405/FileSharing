@@ -14,7 +14,7 @@ var svc *secretsmanager.Client
 
 func init() {
 
-	region := MustEnv("AWS_REGION")
+	region := MustEnv("SECRET_REGION")
 
 	config, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(region))
 	if err != nil {

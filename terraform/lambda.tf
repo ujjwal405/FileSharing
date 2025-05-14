@@ -7,7 +7,7 @@ module "lambda_authorizer" {
   lambda_role_arn  = module.iam_role_authorizer.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 
 }
@@ -22,7 +22,7 @@ module "lambda_code_verification" {
   lambda_role_arn  = module.iam_role_code_verification.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 
 }
@@ -36,7 +36,7 @@ module "lambda_confirm_password" {
   lambda_role_arn  = module.iam_role_confirm_password.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -64,7 +64,7 @@ module "lambda_forget_password" {
   lambda_role_arn  = module.iam_role_forget_password.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -79,7 +79,7 @@ module "lambda_google_callback" {
   lambda_role_arn  = module.iam_role_google_callback.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -93,7 +93,7 @@ module "lambda_logout" {
   lambda_role_arn  = module.iam_role_logout.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -108,7 +108,7 @@ module "lambda_myfiles" {
   lambda_role_arn  = module.iam_role_my_files.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -122,7 +122,7 @@ module "lambda_signin" {
   lambda_role_arn  = module.iam_role_sign_in.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -136,7 +136,7 @@ module "lambda_signin_google" {
   lambda_role_arn  = module.iam_role_sign_in_google.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -150,7 +150,7 @@ module "lambda_signup" {
   lambda_role_arn  = module.iam_role_sign_up.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
@@ -163,7 +163,7 @@ module "lambda_upload_metadata" {
   lambda_role_arn  = module.iam_role_upload_metadata.role_arn
   depends_on       = [null_resource.build_lambdas]
   environment_variables = {
-    AWS_REGION = var.secret_manager_aws_region
+    SECRET_REGION = var.secret_manager_aws_region
   }
 }
 
