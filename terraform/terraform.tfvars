@@ -47,7 +47,7 @@ endpoint_type = "REGIONAL"
 
 id_token_validity = 1
 
-s3_file_upload = "FileUploadBucket"
+s3_file_upload = "fileuploadbucket"
 
 upload_signed_url_env = {
   BUCKET_NAME = "FileUploadBucket"

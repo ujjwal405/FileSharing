@@ -182,9 +182,8 @@ module "iam_role_sign_in_google" {
   lambda_name = "signin_google"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_google_client_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_google_client_secret.policy_arn,
-    module.iam_policy_secret_manager_get_item_google_redirect_url.policy_arn,
+    module.iam_policy_secret_manager_get_item_google_credentials.policy_arn,
+
     data.aws_iam_policy.lambda_basic_execution.arn
 
   ]
@@ -203,9 +202,8 @@ module "iam_role_google_callback" {
     module.iam_policy_secret_manager_get_item_user_pool_id.policy_arn,
     module.iam_policy_secret_manager_get_item_dynamo_region.policy_arn,
     module.iam_policy_secret_manager_get_item_dynamo_user_table_name.policy_arn,
-    module.iam_policy_secret_manager_get_item_google_client_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_google_client_secret.policy_arn,
-    module.iam_policy_secret_manager_get_item_google_redirect_url.policy_arn,
+    module.iam_policy_secret_manager_get_item_google_credentials.policy_arn,
+
     module.iam_policy_cognito_initiate_auth.policy_arn,
     module.iam_policy_cognito_admin_get_user.policy_arn,
     module.iam_policy_cognito_admin_create_user.policy_arn,

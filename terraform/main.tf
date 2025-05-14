@@ -6,7 +6,7 @@ resource "null_resource" "get_lambda_dirs" {
     always_run = timestamp()
   }
   provisioner "local-exec" {
-    command = "./get_lambdas.sh"
+    command = "chmod +x ./get_lambdas.sh && ./get_lambdas.sh"
   }
 }
 
