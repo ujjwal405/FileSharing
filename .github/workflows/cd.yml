@@ -68,5 +68,5 @@ jobs:
         run: terraform plan -no-color
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_call'
+        # if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_call'
         run: terraform apply -auto-approve
