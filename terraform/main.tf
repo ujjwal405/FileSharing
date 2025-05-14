@@ -33,21 +33,22 @@ resource "null_resource" "build_lambdas" {
     command = <<EOT
       set -e
       # where your lambdas live (adjust this path as needed)
-ROOT="$(pwd)/../backend/lambda"
+      ROOT="$(pwd)/../backend/lambda"
 
-for dir in ${join(" ", local.lambda_dirs)}; do
-  LAMBDADIR="$ROOT/$dir"
+      for dir in ${join(" ", local.lambda_dirs)}; do
+          LAMBDADIR="$ROOT/$dir"
 
-  echo "🔨 Building $dir…"
-  cd "$LAMBDADIR/cmd"
+          echo "🔨 Building $dir…"
+          cd "$LAMBDADIR/cmd"
 
-  GOOS=linux GOARCH=amd64 go build -o bootstrap main.go
+          GOOS=linux GOARCH=amd64 go build -o bootstrap main.go
 
-  echo "🗜 Zipping $dir…"
-  mkdir -p "$LAMBDADIR/bootstrap"
-  mv bootstrap "$LAMBDADIR/bootstrap/"
+          echo "🗜 Zipping $dir…"
+          mkdir -p "$LAMBDADIR/bootstrap"
+          mv bootstrap "$LAMBDADIR/bootstrap/"
 
-  echo "✅ Moved to $dir/bootstrap/bootstrap"
+          echo "✅ Moved to $dir/bootstrap/bootstrap"
+      done
     EOT
   }
 }
