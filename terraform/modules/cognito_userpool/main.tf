@@ -31,6 +31,9 @@ resource "aws_cognito_user_pool" "myPool" {
     minimum_length = 8
   }
 
+  lifecycle {
+    ignore_changes = [schema]
+  }
 
   auto_verified_attributes = ["email"]
 
@@ -49,10 +52,11 @@ resource "aws_cognito_user_pool" "myPool" {
 
 # Define the App Client for the User Pool
 resource "aws_cognito_user_pool_client" "myClient" {
-  name                  = "my-app-client"
-  user_pool_id          = aws_cognito_user_pool.myPool.id
-  access_token_validity = var.access_token_validity
-  id_token_validity     = var.id_token_validity
+  name                   = "my-app-client"
+  user_pool_id           = aws_cognito_user_pool.myPool.id
+  access_token_validity  = var.access_token_validity
+  id_token_validity      = var.id_token_validity
+  refresh_token_validity = var.refresh_token_validity
 
   # Specify attributes the app client can write to
   write_attributes = [

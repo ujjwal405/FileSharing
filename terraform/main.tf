@@ -32,18 +32,22 @@ resource "null_resource" "build_lambdas" {
   provisioner "local-exec" {
     command = <<EOT
       set -e
-      for dir in ${join(" ", local.lambda_dirs)}; do
-        LAMBDADIR=$(pwd)/../backend/lambda/$dir
-        echo "🔨 Building $dir…"
-        cd "$LAMBDADIR/cmd"
-        GOOS=linux GOARCH=amd64 go build -o bootstrap main.go
+      # where your lambdas live (adjust this path as needed)
+ROOT="$(pwd)/../backend/lambda"
 
-        echo "🗜 Zipping $dir…"
-        mkdir -p "$LAMBDADIR/bootstrap"
-        mv bootstrap "$LAMBDADIR/bootstrap/"
+for dir in ${join(" ", local.lambda_dirs)}; do
+  LAMBDADIR="$ROOT/$dir"
 
-        echo "✅ Moved to $dir/bootstrap/bootstrap"
-      done
+  echo "🔨 Building $dir…"
+  cd "$LAMBDADIR/cmd"
+
+  GOOS=linux GOARCH=amd64 go build -o bootstrap main.go
+
+  echo "🗜 Zipping $dir…"
+  mkdir -p "$LAMBDADIR/bootstrap"
+  mv bootstrap "$LAMBDADIR/bootstrap/"
+
+  echo "✅ Moved to $dir/bootstrap/bootstrap"
     EOT
   }
 }

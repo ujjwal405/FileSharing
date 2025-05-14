@@ -7,7 +7,7 @@ api_gateway_name = "FileUpload-GTW"
 api_stage_name   = "v1"
 
 download_signed_url_env = {
-  BUCKET_NAME = "FileUploadBucket"
+  BUCKET_NAME = "user-file-bucket"
   ENVIRONMENT = "prod"
   REGION      = "ap-south-1"
 }
@@ -47,10 +47,12 @@ endpoint_type = "REGIONAL"
 
 id_token_validity = 1
 
-s3_file_upload = "fileuploadbucket"
+refresh_token_validity = 1
+
+s3_file_upload = "user-file-bucket"
 
 upload_signed_url_env = {
-  BUCKET_NAME = "FileUploadBucket"
+  BUCKET_NAME = "user-file-bucket"
   ENVIRONMENT = "prod"
   REGION      = "ap-south-1"
 }
