@@ -209,7 +209,7 @@ module "iam_role_google_callback" {
     module.iam_policy_secret_manager_get_item_google_credentials.policy_arn,
 
     module.iam_policy_cognito_initiate_auth.policy_arn,
-    module.iam_policy_cognito_admin_delete_create_get_user.arn,
+    module.iam_policy_cognito_admin_delete_create_get_user.policy_arn,
     module.iam_policy_dynamo_put_item_user_table.policy_arn,
     local.lambda_basic_execution_policy
 
