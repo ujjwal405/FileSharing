@@ -17,6 +17,19 @@ module "iam_policy_cognito_admin_delete" {
   ]
 }
 
+//IAM policy for cognitoAdminDeleteCreateUser
+module "iam_policy_cognito_admin_delete_create_get_user" {
+  source      = "./modules/iam/policy"
+  policy_name = "cognito_admin_delete_create_user"
+  env_name    = var.env_name
+  policy_statements = [
+    {
+      "Effect" : "Allow",
+      "Action" : ["cognito-idp:AdminDeleteUser", "cognito-idp:AdminCreateUser", "cognito-idp:AdminGetUser"],
+      "Resource" : [module.cognito_user_pool.user_pool_arn]
+    }
+  ]
+}
 // IAM policy for cognitoInitiateAuth
 module "iam_policy_cognito_initiate_auth" {
   source      = "./modules/iam/policy"
