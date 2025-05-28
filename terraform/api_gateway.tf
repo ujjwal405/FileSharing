@@ -129,82 +129,82 @@ module "api_method" {
     {
       resource_name = "/codeVerification" # 👈 Must match the `res.path` key in output!
       http_method   = "POST"
-      lambda_arn    = module.lambda_code_verification.invoke_arn
+      lambda_arn    = module.lambda_code_verification.invocation_arn
     },
     {
       resource_name = "/confirmPassword"
       http_method   = "POST"
-      lambda_arn    = module.lambda_confirm_password.invoke_arn
+      lambda_arn    = module.lambda_confirm_password.invocation_arn
 
     },
     {
       resource_name = "/downloadSignedUrl"
       http_method   = "GET"
-      lambda_arn    = module.lambda_download_signed_url.invoke_arn
+      lambda_arn    = module.lambda_download_signed_url.invocation_arn
     },
     {
       resource_name = "/forgetPassword"
       http_method   = "POST"
-      lambda_arn    = module.lambda_forget_password.invoke_arn
+      lambda_arn    = module.lambda_forget_password.invocation_arn
 
     },
     {
       resource_name = "/getCode"
       http_method   = "POST"
-      lambda_arn    = module.lambda_get_code.invoke_arn
+      lambda_arn    = module.lambda_get_code.invocation_arn
 
 
     },
     {
       resource_name = "/googleCallback"
       http_method   = "POST"
-      lambda_arn    = module.lambda_google_callback.invoke_arn
+      lambda_arn    = module.lambda_google_callback.invocation_arn
 
     },
     {
       resource_name  = "/logout"
       http_method    = "POST"
-      lambda_arn     = module.lambda_logout.invoke_arn
+      lambda_arn     = module.lambda_logout.invocation_arn
       use_authorizer = true
 
     },
     {
       resource_name  = "/myfiles"
       http_method    = "GET"
-      lambda_arn     = module.lambda_myfiles.invoke_arn
+      lambda_arn     = module.lambda_myfiles.invocation_arn
       use_authorizer = true
 
     },
     {
       resource_name = "/signin"
       http_method   = "POST"
-      lambda_arn    = module.lambda_signin.invoke_arn
+      lambda_arn    = module.lambda_signin.invocation_arn
 
     },
     {
       resource_name = "/signinGoogle"
       http_method   = "POST"
-      lambda_arn    = module.lambda_signin_google.invoke_arn
+      lambda_arn    = module.lambda_signin_google.invocation_arn
 
     },
     {
       resource_name = "/signup"
       http_method   = "POST"
-      lambda_arn    = module.lambda_signup.invoke_arn
+      lambda_arn    = module.lambda_signup.invocation_arn
 
     },
 
     {
       resource_name  = "/uploadMetaData"
       http_method    = "POST"
-      lambda_arn     = module.lambda_upload_metadata.invoke_arn
+      lambda_arn     = module.lambda_upload_metadata.invocation_arn
       use_authorizer = true
 
     },
     {
       resource_name  = "/uploadSignedUrl"
       http_method    = "GET"
-      lambda_arn     = module.lambda_upload_signed_url.invoke_arn
+      lambda_arn     = module.lambda_upload_signed_url.invocation_arn
       use_authorizer = true
 
     },
