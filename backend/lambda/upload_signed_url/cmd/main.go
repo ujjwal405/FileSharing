@@ -11,6 +11,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	mys3 "github.com/ujjwal405/FileSharing/upload_signed_url/s3"
+	"github.com/ujjwal405/FileSharing/upload_signed_url/token"
 )
 
 const (
@@ -56,9 +57,24 @@ func handleUploadSignedURL(ctx context.Context, event events.APIGatewayProxyRequ
 			Body: "Internal Server Error",
 		}, nil
 	}
-	responseBody, err := json.Marshal(map[string]string{
-		"url":     url,
-		"file_id": key,
+	authContext := event.RequestContext.Authorizer
+	accessToken, accessTokenExists := authContext["access_token"].(string)
+	idToken, idTokenExists := authContext["id_token"].(string)
+	var userToken *token.Token
+	if accessTokenExists || idTokenExists {
+		userToken = &token.Token{}
+		if accessTokenExists {
+			userToken.AccessToken = &accessToken
+		}
+		if idTokenExists {
+			userToken.IDToken = &idToken
+		}
+	}
+
+	responseBody, err := json.Marshal(token.UploadSignedURLResponse{
+		URL:       url,
+		FileID:    key,
+		UserToken: userToken,
 	})
 	if err != nil {
 		log.Printf("failed to marshal response: %v", err)
