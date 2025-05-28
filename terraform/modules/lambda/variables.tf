@@ -11,7 +11,7 @@ variable "env_name" {
 variable "function_runtime" {
   description = "Lambda function runtime"
   type        = string
-  default     = "go1.x"
+  default     = "provided.al2023"
 }
 
 variable "function_timeout" {
