@@ -47,7 +47,7 @@ module "file_sharing_gateway" {
 module "api_authorizer" {
   source                 = "./modules/api_authorizer"
   rest_api_id            = module.file_sharing_gateway.rest_api_id
-  authorizer_uri         = module.lambda_authorizer.invoke_arn
+  authorizer_uri         = "arn:aws:apigateway:${var.aws_region}:lambda:path/2015-03-31/functions/${module.lambda_authorizer.invoke_arn}/invocations"
   aws_region             = var.aws_region
   account_id             = data.aws_caller_identity.current.account_id
   lambda_authorizer_name = module.lambda_authorizer.function_name
