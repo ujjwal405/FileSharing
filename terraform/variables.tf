@@ -99,6 +99,6 @@ variable "upload_signed_url_env" {
   type = map(string)
 }
 
-variable "rest_api_id" {}
-variable "stage_name" {}
-variable "domain_name" {}
+
+
+variable "backend_domain_name" {}
