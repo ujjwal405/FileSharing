@@ -6,6 +6,9 @@ allow_methods = ["GET", "POST", "OPTIONS"]
 api_gateway_name = "FileUpload-GTW"
 api_stage_name   = "v1"
 
+backend_domain_name = "api.ujjwalsilwal123.com.np"
+
+
 download_signed_url_env = {
   BUCKET_NAME = "filesharing-user-file-bucket"
   ENVIRONMENT = "prod"
