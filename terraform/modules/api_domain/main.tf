@@ -7,6 +7,9 @@ data "aws_acm_certificate" "cert" {
 resource "aws_api_gateway_domain_name" "custom_domain" {
   domain_name              = var.domain_name                   # Replace with your custom domain
   regional_certificate_arn = data.aws_acm_certificate.cert.arn # Replace with ACM certificate ARN
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
 }
 
 resource "aws_api_gateway_base_path_mapping" "custom_domain_mapping" {
