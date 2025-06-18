@@ -10,7 +10,7 @@ resource "aws_api_gateway_domain_name" "this" {
   certificate_arn = data.aws_acm_certificate.this.arn
 
   endpoint_configuration {
-    types = var.endpoint_type
+    types = [var.endpoint_type]
   }
 }
 
