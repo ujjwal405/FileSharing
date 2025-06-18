@@ -257,6 +257,16 @@ module "api_domain" {
 }
 
 
+module "api_custom_domain" {
+  source        = "./modules/api_custom_domain"
+  domain_name   = var.backend_domain_name
+  endpoint_type = var.endpoint_type
+  rest_api_id   = module.file_sharing_gateway.rest_api_id
+  stage_name    = module.api_stage.stage_name
+
+
+}
+
 module "cors" {
   source   = "squidfunk/api-gateway-enable-cors/aws"
   version  = "0.3.3"

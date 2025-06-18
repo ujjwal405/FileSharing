@@ -18,10 +18,16 @@ variable "aws_region" {
   type    = string
   default = "ap-south-1"
 }
+variable "cloudflare_api_token" {
+  type = string
+}
 
+variable "cloudflare_zone_id" {}
+variable "cloudflare_sub_domain_name" {}
 variable "download_signed_url_env" {
   type = map(string)
 }
+
 
 variable "dynamo_file_meta_data" {}
 
