@@ -16,20 +16,20 @@ type CognitoClient struct {
 
 func NewCognitoClient() (*CognitoClient, error) {
 
-	secretIDs := []string{"COGNITO_REGION", "APP_CLIENT_ID", "USER_POOL_ID"}
+	secretIDs := []string{"COGNITO_REGIONS", "APP_CLIENT_IDS", "USER_POOL_IDS"}
 	secrets, err := secret_manager.GetSecrets(secretIDs)
 	if err != nil {
 		return nil, err
 	}
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["COGNITO_REGION"]))
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["COGNITO_REGIONS"]))
 	if err != nil {
 		return nil, err
 	}
 	client := cognito.NewFromConfig(cfg)
 	return &CognitoClient{
 		cognitoClient: client,
-		appClientID:   secrets["APP_CLIENT_ID"],
-		userPoolId:    secrets["USER_POOL_ID"],
+		appClientID:   secrets["APP_CLIENT_IDS"],
+		userPoolId:    secrets["USER_POOL_IDS"],
 	}, nil
 
 }

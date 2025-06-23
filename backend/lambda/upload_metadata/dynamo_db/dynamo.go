@@ -14,18 +14,18 @@ type DynamoClient struct {
 }
 
 func NewDynamoClient() (*DynamoClient, error) {
-	secretIDs := []string{"DYNAMO_REGION", "DYNAMO_FILE_NAME"}
+	secretIDs := []string{"DYNAMO_REGIONS", "DYNAMO_FILE_NAMES"}
 	secrets, err := secret_manager.GetSecrets(secretIDs)
 	if err != nil {
 		return nil, err
 	}
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["DYNAMO_REGION"]))
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["DYNAMO_REGIONS"]))
 	if err != nil {
 		return nil, err
 	}
 	client := dynamodb.NewFromConfig(cfg)
 	return &DynamoClient{
 		dbClient:  client,
-		tableName: secrets["DYNAMO_USER_TABLE_NAME"],
+		tableName: secrets["DYNAMO_USER_TABLE_NAMES"],
 	}, nil
 }

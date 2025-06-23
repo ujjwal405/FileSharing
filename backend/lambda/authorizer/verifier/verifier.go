@@ -19,16 +19,16 @@ type Verifier struct {
 
 func NewVerifier() (*Verifier, error) {
 
-	secrets, err := secretmanager.GetSecrets([]string{"COGNITO_REGION", "APP_CLIENT_ID", "USER_POOL_ID"})
+	secrets, err := secretmanager.GetSecrets([]string{"COGNITO_REGIONS", "APP_CLIENT_IDS", "USER_POOL_IDS"})
 	if err != nil {
 		return nil, err
 	}
 	mycache := cache.NewJWKSCache()
 	return &Verifier{
 		cache:      mycache,
-		clientID:   secrets["APP_CLIENT_ID"],
-		region:     secrets["COGNITO_REGION"],
-		userPoolID: secrets["USER_POOL_ID"],
+		clientID:   secrets["APP_CLIENT_IDS"],
+		region:     secrets["COGNITO_REGIONS"],
+		userPoolID: secrets["USER_POOL_IDS"],
 	}, nil
 }
 

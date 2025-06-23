@@ -6,8 +6,8 @@ data "aws_acm_certificate" "this" {
 }
 
 resource "aws_api_gateway_domain_name" "this" {
-  domain_name     = var.domain_name
-  certificate_arn = data.aws_acm_certificate.this.arn
+  domain_name              = var.domain_name
+  regional_certificate_arn = data.aws_acm_certificate.this.arn
 
   endpoint_configuration {
     types = [var.endpoint_type]

@@ -98,7 +98,7 @@ variable "s3_file_upload" {}
 
 variable "secret_manager_aws_region" {
   type    = string
-  default = "ap-south_1"
+  default = "ap-south-1"
 }
 
 variable "upload_signed_url_env" {
