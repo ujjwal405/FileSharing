@@ -248,13 +248,13 @@ module "api_stage" {
 # }
 
 
-module "api_domain" {
-  source      = "./modules/api_domain"
-  rest_api_id = module.file_sharing_gateway.rest_api_id
-  stage_name  = var.api_stage_name
-  domain_name = var.backend_domain_name
-  depends_on  = [module.api_stage]
-}
+# module "api_domain" {
+#   source      = "./modules/api_domain"
+#   rest_api_id = module.file_sharing_gateway.rest_api_id
+#   stage_name  = var.api_stage_name
+#   domain_name = var.backend_domain_name
+#   depends_on  = [module.api_stage]
+# }
 
 
 module "api_custom_domain" {
