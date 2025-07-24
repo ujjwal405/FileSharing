@@ -216,6 +216,7 @@ module "api_method" {
 module "api_deployment" {
   source      = "./modules/api_deployment"
   rest_api_id = module.file_sharing_gateway.rest_api_id
+  triggers    = module.api_method.methods_signature
   depends_on = [
     module.api_method,
     module.api_resource,
