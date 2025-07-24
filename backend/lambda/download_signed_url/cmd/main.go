@@ -53,7 +53,14 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 		log.Printf("failed to parse request body: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
-			Body:       "Invalid request body",
+			Headers: map[string]string{
+				"Content-Type":                     "application/json",
+				"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+				"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
+			},
+			Body: "Invalid request body",
 		}, nil
 	}
 
@@ -63,7 +70,11 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 			return events.APIGatewayProxyResponse{
 				StatusCode: apiErr.StatusCode,
 				Headers: map[string]string{
-					"Content-Type": "application/json",
+					"Content-Type":                     "application/json",
+					"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+					"Access-Control-Allow-Credentials": "true",
+					"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+					"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 				},
 				Body: apiErr.Error(),
 			}, nil
@@ -72,7 +83,11 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 			return events.APIGatewayProxyResponse{
 				StatusCode: 500,
 				Headers: map[string]string{
-					"Content-Type": "application/json",
+					"Content-Type":                     "application/json",
+					"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+					"Access-Control-Allow-Credentials": "true",
+					"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+					"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 				},
 				Body: "Internal Server Error",
 			}, nil
@@ -83,7 +98,14 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 		log.Printf("failed to get presigned URL: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed to get presigned URL",
+			Headers: map[string]string{
+				"Content-Type":                     "application/json",
+				"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+				"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
+			},
+			Body: "Failed to get presigned URL",
 		}, nil
 	}
 	responseBody, err := json.Marshal(map[string]string{
@@ -94,7 +116,11 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Headers: map[string]string{
-				"Content-Type": "application/json",
+				"Content-Type":                     "application/json",
+				"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+				"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 			},
 			Body: "Internal Server Error",
 		}, nil
@@ -102,7 +128,11 @@ func handleDownloadSignedURL(ctx context.Context, event events.APIGatewayProxyRe
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
 		Headers: map[string]string{
-			"Content-Type": "application/json",
+			"Content-Type":                     "application/json",
+			"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+			"Access-Control-Allow-Credentials": "true",
+			"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+			"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 		},
 		Body: string(responseBody),
 	}, nil

@@ -7,7 +7,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	apierror "github.com/ujjwal405/FileSharing/authorizer/apiError"
 	"github.com/ujjwal405/FileSharing/authorizer/cache"
-	secretmanager "github.com/ujjwal405/FileSharing/authorizer/secret_manager"
+	ssm "github.com/ujjwal405/FileSharing/authorizer/ssm"
 )
 
 type Verifier struct {
@@ -19,16 +19,16 @@ type Verifier struct {
 
 func NewVerifier() (*Verifier, error) {
 
-	secrets, err := secretmanager.GetSecrets([]string{"COGNITO_REGIONS", "APP_CLIENT_IDS", "USER_POOL_IDS"})
+	secrets, err := ssm.GetParameters([]string{"/myapp/cognito/region", "/myapp/cognito/appClientID", "/myapp/cognito/userPoolID"})
 	if err != nil {
 		return nil, err
 	}
 	mycache := cache.NewJWKSCache()
 	return &Verifier{
 		cache:      mycache,
-		clientID:   secrets["APP_CLIENT_IDS"],
-		region:     secrets["COGNITO_REGIONS"],
-		userPoolID: secrets["USER_POOL_IDS"],
+		clientID:   secrets["/myapp/cognito/appClientID"],
+		region:     secrets["/myapp/cognito/region"],
+		userPoolID: secrets["/myapp/cognito/userPoolID"],
 	}, nil
 }
 

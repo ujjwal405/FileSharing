@@ -263,7 +263,7 @@ module "api_custom_domain" {
   endpoint_type = var.endpoint_type
   rest_api_id   = module.file_sharing_gateway.rest_api_id
   stage_name    = module.api_stage.stage_name
-
+  depends_on    = [module.file_sharing_gateway, module.api_stage]
 
 }
 

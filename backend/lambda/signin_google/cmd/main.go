@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/ujjwal405/FileSharing/signin_google/google"
 	"github.com/ujjwal405/FileSharing/signin_google/helper"
-	"github.com/ujjwal405/FileSharing/signin_google/secret_manager"
+	ssm "github.com/ujjwal405/FileSharing/signin_google/ssm"
 	"golang.org/x/oauth2"
 )
 
@@ -22,11 +22,11 @@ func init() {
 	if err != nil {
 		log.Fatalf("unable to load google config, %v", err)
 	}
-	secret, err := secret_manager.GetSecrets([]string{"SECRET_KEY"})
+	secret, err := ssm.GetParameters([]string{"/myapp/secretKey"})
 	if err != nil {
 		log.Fatalf("unable to load secrets %v", err)
 	}
-	secretKey = secret["SECRET_KEY"]
+	secretKey = secret["/myapp/secretKey"]
 	googleOauthConfig = OauthConfig
 
 }
@@ -38,7 +38,11 @@ func handleGoogleSignIn(ctx context.Context, event events.APIGatewayProxyRequest
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Headers: map[string]string{
-				"Content-Type": "application/json",
+				"Content-Type":                     "application/json",
+				"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+				"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 			},
 			Body: "Internal Server Error",
 		}, nil
@@ -55,7 +59,11 @@ func handleGoogleSignIn(ctx context.Context, event events.APIGatewayProxyRequest
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Headers: map[string]string{
-				"Content-Type": "application/json",
+				"Content-Type":                     "application/json",
+				"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+				"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 			},
 			Body: "Internal Server Error",
 		}, nil
@@ -63,7 +71,11 @@ func handleGoogleSignIn(ctx context.Context, event events.APIGatewayProxyRequest
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
 		Headers: map[string]string{
-			"Content-Type": "application/json",
+			"Content-Type":                     "application/json",
+			"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+			"Access-Control-Allow-Credentials": "true",
+			"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+			"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 		},
 		Body: string(responseBody),
 	}, nil

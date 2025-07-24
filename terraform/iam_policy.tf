@@ -260,73 +260,88 @@ module "iam_policy_s3_user_file_put_object" {
 
 
 // IAM policy for secretManagerGetItem
-module "iam_policy_secret_manager_get_item_cognito_region" {
+module "iam_policy_ssm_parameterr_get_item_cognito_region" {
   source      = "./modules/iam/policy"
-  policy_name = "secret_manager_get_item_cognito_region"
+  policy_name = "ssm_parameter_get_item_cognito_region"
   env_name    = var.env_name
   policy_statements = [
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_cognito_region.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_cognito_region.parameter_arn]
     }
   ]
 }
 
 
 // IAM policy for secretManagerGetItem
-module "iam_policy_secret_manager_get_item_app_client_id" {
+module "iam_policy_ssm_parameter_get_item_app_client_id" {
   source      = "./modules/iam/policy"
-  policy_name = "secret_manager_get_item_app_client_id"
+  policy_name = "ssm_parameter_get_item_app_client_id"
   env_name    = var.env_name
   policy_statements = [
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_app_client_id.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_app_client_id.parameter_arn]
     }
   ]
 }
 
 
 // IAM policy for secretManagerGetItem
-module "iam_policy_secret_manager_get_item_user_pool_id" {
+module "iam_policy_ssm_parameter_get_item_user_pool_id" {
   source      = "./modules/iam/policy"
-  policy_name = "secret_manager_get_item_user_pool__id"
+  policy_name = "ssm_parameter_get_item_user_pool__id"
   env_name    = var.env_name
   policy_statements = [
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_user_pool_id.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_user_pool_id.parameter_arn]
     }
   ]
 }
 
 // IAM policy for secretManagerGetItem
-module "iam_policy_secret_manager_get_item_dynamo_region" {
+module "iam_policy_ssm_parameter_get_item_dynamo_region" {
   source      = "./modules/iam/policy"
-  policy_name = "secret_manager_get_item_dynamo_region"
+  policy_name = "ssm_parameter_get_item_dynamo_region"
   env_name    = var.env_name
   policy_statements = [
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_dynamo_region.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_dynamo_region.parameter_arn]
     }
   ]
 }
 
 // IAM policy for secretManagerGetItem
-module "iam_policy_secret_manager_get_item_dynamo_user_table_name" {
+module "iam_policy_ssm_parameter_get_item_dynamo_user_table_name" {
   source      = "./modules/iam/policy"
-  policy_name = "secret_manager_get_item_dynamo_user_table_name"
+  policy_name = "ssm_parameter_get_item_dynamo_user_table_name"
   env_name    = var.env_name
   policy_statements = [
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_dynamo_user_table_name.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_dynamo_user_table.parameter_arn]
     }
   ]
 }
@@ -334,15 +349,18 @@ module "iam_policy_secret_manager_get_item_dynamo_user_table_name" {
 
 
 // IAM policy for secretManagerGetItem
-module "iam_policy_secret_manager_get_item_dynamo_file_name" {
+module "iam_policy_ssm_parameter_get_item_dynamo_file_name" {
   source      = "./modules/iam/policy"
-  policy_name = "secret_manager_get_item_dynamo_file_name"
+  policy_name = "ssm_parameter_get_item_dynamo_file_name"
   env_name    = var.env_name
   policy_statements = [
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_dynamo_file_name.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_dynamo_file_table.parameter_arn]
     }
   ]
 }
@@ -398,25 +416,34 @@ module "iam_policy_secret_manager_get_item_dynamo_file_name" {
 
 
 
-module "iam_policy_secret_manager_get_item_google_credentials" {
+module "iam_policy_ssm_parameter_get_item_google_credentials" {
   source      = "./modules/iam/policy"
-  policy_name = "secret_manager_get_item_google_credentials"
+  policy_name = "ssm_parameter_get_item_google_credentials"
   env_name    = var.env_name
   policy_statements = [
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_google_client_secret.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_google_client_id.parameter_arn]
     },
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_google_client_id.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_google_client_secret.parameter_arn]
     },
     {
       "Effect" : "Allow",
-      "Action" : ["secretsmanager:GetSecretValue"],
-      "Resource" : [module.secret_manager_google_redirect_url.secret_arn]
+      "Action" : [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+      ],
+      "Resource" : [module.ssm_google_redirect_url.parameter_arn]
     }
   ]
 }

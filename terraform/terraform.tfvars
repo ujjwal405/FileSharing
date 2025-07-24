@@ -51,6 +51,8 @@ endpoint_type = "REGIONAL"
 
 id_token_validity = 1
 
+recovery_window_days = 0
+
 refresh_token_validity = 1
 
 s3_file_upload = "filesharing-user-file-bucket"

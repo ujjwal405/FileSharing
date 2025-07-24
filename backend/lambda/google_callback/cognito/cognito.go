@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	cognito "github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
 
-	secret_manager "github.com/ujjwal405/FileSharing/google_callback/secret_manager"
+	ssm "github.com/ujjwal405/FileSharing/google_callback/ssm"
 )
 
 type CognitoClient struct {
@@ -16,13 +16,13 @@ type CognitoClient struct {
 }
 
 func NewCognitoClient() (*CognitoClient, error) {
-	secretIDs := []string{"COGNITO_REGIONS", "APP_CLIENT_IDS", "USER_POOL_IDS"}
-	secrets, err := secret_manager.GetSecrets(secretIDs)
+	secretIDs := []string{"/myapp/cognito/region", "/myapp/cognito/appClientID", "/myapp/cognito/userPoolID"}
+	secrets, err := ssm.GetParameters(secretIDs)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["COGNITO_REGIONS"]))
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["/myapp/cognito/region"]))
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func NewCognitoClient() (*CognitoClient, error) {
 
 	return &CognitoClient{
 		cognitoClient: client,
-		appClientID:   secrets["APP_CLIENT_IDS"],
-		userPoolID:    secrets["USER_POOL_IDS"],
+		appClientID:   secrets["/myapp/cognito/appClientID"],
+		userPoolID:    secrets["/myapp/cognito/userPoolID"],
 	}, nil
 }

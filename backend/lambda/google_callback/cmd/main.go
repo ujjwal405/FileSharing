@@ -12,7 +12,7 @@ import (
 	my_google "github.com/ujjwal405/FileSharing/google_callback/google"
 	"github.com/ujjwal405/FileSharing/google_callback/handler"
 	"github.com/ujjwal405/FileSharing/google_callback/helper"
-	secret_manager "github.com/ujjwal405/FileSharing/google_callback/secret_manager"
+	ssm "github.com/ujjwal405/FileSharing/google_callback/ssm"
 	"github.com/ujjwal405/FileSharing/google_callback/token"
 )
 
@@ -32,11 +32,11 @@ func init() {
 	if err != nil {
 		log.Fatalf("unable to load dynamo config, %v", err)
 	}
-	secret, err := secret_manager.GetSecrets([]string{"SECRET_KEY"})
+	secret, err := ssm.GetParameters([]string{"/myapp/secretKey"})
 	if err != nil {
 		log.Fatalf("unable to load secrets %v", err)
 	}
-	secretKey = secret["SECRET_KEY"]
+	secretKey = secret["/myapp/secretKey"]
 	lambdaHandler = handler.NewLambdaHandler(googleConfig, cClient, dClient, secretKey)
 }
 
@@ -50,7 +50,11 @@ func handleGoogleCallback(ctx context.Context, event events.APIGatewayProxyReque
 			return events.APIGatewayProxyResponse{
 				StatusCode: apiErr.StatusCode,
 				Headers: map[string]string{
-					"Content-Type": "application/json",
+					"Content-Type":                     "application/json",
+					"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+					"Access-Control-Allow-Credentials": "true",
+					"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+					"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 				},
 				Body: apiErr.Error(),
 			}, nil
@@ -59,7 +63,11 @@ func handleGoogleCallback(ctx context.Context, event events.APIGatewayProxyReque
 			return events.APIGatewayProxyResponse{
 				StatusCode: 500,
 				Headers: map[string]string{
-					"Content-Type": "application/json",
+					"Content-Type":                     "application/json",
+					"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+					"Access-Control-Allow-Credentials": "true",
+					"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+					"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 				},
 				Body: "Internal Server Error",
 			}, nil
@@ -73,7 +81,11 @@ func handleGoogleCallback(ctx context.Context, event events.APIGatewayProxyReque
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Headers: map[string]string{
-			"Content-Type": "application/json",
+			"Content-Type":                     "application/json",
+			"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+			"Access-Control-Allow-Credentials": "true",
+			"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+			"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 		},
 		Body: string(responseBody),
 	}, nil

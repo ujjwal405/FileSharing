@@ -21,7 +21,14 @@ func handleGetCode(ctx context.Context, event events.APIGatewayProxyRequest) (ev
 		log.Printf("failed to parse request body: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
-			Body:       "Invalid request body",
+			Headers: map[string]string{
+				"Content-Type":                     "application/json",
+				"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+				"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
+			},
+			Body: "Invalid request body",
 		}, nil
 	}
 	code := helper.GenerateUniqueCode(requestBody.KeyID)
@@ -34,7 +41,11 @@ func handleGetCode(ctx context.Context, event events.APIGatewayProxyRequest) (ev
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Headers: map[string]string{
-				"Content-Type": "application/json",
+				"Content-Type":                     "application/json",
+				"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+				"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 			},
 			Body: "Internal Server Error",
 		}, nil
@@ -42,7 +53,11 @@ func handleGetCode(ctx context.Context, event events.APIGatewayProxyRequest) (ev
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
 		Headers: map[string]string{
-			"Content-Type": "application/json",
+			"Content-Type":                     "application/json",
+			"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+			"Access-Control-Allow-Credentials": "true",
+			"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+			"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 		},
 		Body: string(responseBody),
 	}, nil

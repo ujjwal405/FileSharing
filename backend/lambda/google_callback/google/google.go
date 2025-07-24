@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	secret_manager "github.com/ujjwal405/FileSharing/google_callback/secret_manager"
+	ssm "github.com/ujjwal405/FileSharing/google_callback/ssm"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -17,15 +17,15 @@ type GoogleConfig struct {
 
 func InitGoogleConfig() (*GoogleConfig, error) {
 
-	secretIDs := []string{"GOOGLE_CLIENT_IDS", "GOOGLE_CLIENT_SECRETS", "GOOGLE_REDIRECT_URLS"}
-	secrets, err := secret_manager.GetSecrets(secretIDs)
+	secretIDs := []string{"/myapp/google/googleClientID", "/myapp/google/googleClientSecret", "/myapp/google/googleRedirectURL"}
+	secrets, err := ssm.GetParameters(secretIDs)
 	if err != nil {
 		return nil, err
 	}
 	oconfig := &oauth2.Config{
-		ClientID:     secrets["GOOGLE_CLIENT_IDS"],
-		ClientSecret: secrets["GOOGLE_CLIENT_SECRETS"],
-		RedirectURL:  secrets["GOOGLE_REDIRECT_URLS"], // Should be your callback Lambda URL
+		ClientID:     secrets["/myapp/google/googleClientID"],
+		ClientSecret: secrets["/myapp/google/googleClientSecret"],
+		RedirectURL:  secrets["/myapp/google/googleRedirectURL"], // Should be your callback Lambda URL
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		Endpoint:     google.Endpoint,
 	}

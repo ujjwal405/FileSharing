@@ -90,7 +90,10 @@ variable "google_redirect_url" {}
 variable "id_token_validity" {
   type = number
 }
-
+ 
+variable "recovery_window_days"{
+  type = number
+}
 variable "refresh_token_validity" {
   type = number
 }

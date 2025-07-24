@@ -5,7 +5,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	secret_manager "github.com/ujjwal405/FileSharing/myfiles/secret_manager"
+	ssm "github.com/ujjwal405/FileSharing/myfiles/ssm"
 )
 
 type DynamoClient struct {
@@ -14,18 +14,18 @@ type DynamoClient struct {
 }
 
 func NewDynamoClient() (*DynamoClient, error) {
-	secretIDs := []string{"DYNAMO_REGIONS", "DYNAMO_FILE_NAMES"}
-	secrets, err := secret_manager.GetSecrets(secretIDs)
+	secretIDs := []string{"/myapp/dynamo/dynamoRegion", "/myapp/dynamo/dynamoFileName"}
+	secrets, err := ssm.GetParameters(secretIDs)
 	if err != nil {
 		return nil, err
 	}
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["DYNAMO_REGIONS"]))
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(secrets["/myapp/dynamo/dynamoRegion"]))
 	if err != nil {
 		return nil, err
 	}
 	client := dynamodb.NewFromConfig(cfg)
 	return &DynamoClient{
 		dbClient:  client,
-		tableName: secrets["DYNAMO_FILE_NAMES"],
+		tableName: secrets["/myapp/dynamo/dynamoFileName"],
 	}, nil
 }

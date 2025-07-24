@@ -9,11 +9,11 @@ module "iam_role_authorizer" {
   env_name    = var.env_name
   lambda_policy_arns = [
     module.iam_policy_dynamo_get_item_user_table.policy_arn,
-    module.iam_policy_secret_manager_get_item_cognito_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_app_client_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_user_pool_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_user_table_name.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_cognito_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_app_client_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_user_pool_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_user_table_name.policy_arn,
     module.iam_policy_cognito_admin_delete.policy_arn,
     module.iam_policy_cognito_initiate_auth.policy_arn,
     local.lambda_basic_execution_policy
@@ -41,8 +41,8 @@ module "iam_role_confirm_password" {
   lambda_name = "confirm_password"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_cognito_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_app_client_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_cognito_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_app_client_id.policy_arn,
     module.iam_policy_cognito_confirm_forget_password.policy_arn,
     local.lambda_basic_execution_policy
 
@@ -70,8 +70,8 @@ module "iam_role_forget_password" {
   lambda_name = "forget_password"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_cognito_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_app_client_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_cognito_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_app_client_id.policy_arn,
     module.iam_policy_cognito_forget_password.policy_arn,
     local.lambda_basic_execution_policy
 
@@ -85,11 +85,11 @@ module "iam_role_logout" {
   lambda_name = "logout"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_cognito_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_app_client_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_user_pool_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_user_table_name.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_cognito_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_app_client_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_user_pool_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_user_table_name.policy_arn,
     module.iam_policy_cognito_admin_delete.policy_arn,
     module.iam_policy_cognito_revoke_token.policy_arn,
     local.lambda_basic_execution_policy
@@ -103,10 +103,10 @@ module "iam_role_sign_in" {
   lambda_name = "signin"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_cognito_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_app_client_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_user_table_name.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_cognito_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_app_client_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_user_table_name.policy_arn,
     module.iam_policy_cognito_initiate_auth.policy_arn,
     module.iam_policy_dynamo_put_item_user_table.policy_arn,
     local.lambda_basic_execution_policy
@@ -122,9 +122,9 @@ module "iam_role_sign_up" {
   lambda_name = "signup"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_cognito_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_app_client_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_user_pool_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_cognito_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_app_client_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_user_pool_id.policy_arn,
     module.iam_policy_cognito_admin_get_user.policy_arn,
     module.iam_policy_cognito_sign_up.policy_arn,
     local.lambda_basic_execution_policy
@@ -139,8 +139,8 @@ module "iam_role_upload_metadata" {
   lambda_name = "upload_metadata"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_dynamo_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_file_name.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_file_name.policy_arn,
     module.iam_policy_dynamo_put_item_file_table.policy_arn,
     local.lambda_basic_execution_policy
 
@@ -169,8 +169,8 @@ module "iam_role_my_files" {
   lambda_name = "myfiles"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_dynamo_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_file_name.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_file_name.policy_arn,
     module.iam_policy_dynamo_query_file_table.policy_arn,
     local.lambda_basic_execution_policy
 
@@ -186,7 +186,7 @@ module "iam_role_sign_in_google" {
   lambda_name = "signin_google"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_google_credentials.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_google_credentials.policy_arn,
 
     local.lambda_basic_execution_policy
 
@@ -201,12 +201,12 @@ module "iam_role_google_callback" {
   lambda_name = "google_callback"
   env_name    = var.env_name
   lambda_policy_arns = [
-    module.iam_policy_secret_manager_get_item_cognito_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_app_client_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_user_pool_id.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_region.policy_arn,
-    module.iam_policy_secret_manager_get_item_dynamo_user_table_name.policy_arn,
-    module.iam_policy_secret_manager_get_item_google_credentials.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_cognito_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_app_client_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_user_pool_id.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_region.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_dynamo_user_table_name.policy_arn,
+    module.iam_policy_ssm_parameter_get_item_google_credentials.policy_arn,
 
     module.iam_policy_cognito_initiate_auth.policy_arn,
     module.iam_policy_cognito_admin_delete_create_get_user.policy_arn,

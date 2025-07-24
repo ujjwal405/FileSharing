@@ -42,7 +42,11 @@ func handleGetFiles(ctx context.Context, event events.APIGatewayProxyRequest) (e
 			return events.APIGatewayProxyResponse{
 				StatusCode: apiErr.StatusCode,
 				Headers: map[string]string{
-					"Content-Type": "application/json",
+					"Content-Type":                     "application/json",
+					"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+					"Access-Control-Allow-Credentials": "true",
+					"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+					"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 				},
 				Body: apiErr.Error(),
 			}, nil
@@ -51,7 +55,11 @@ func handleGetFiles(ctx context.Context, event events.APIGatewayProxyRequest) (e
 			return events.APIGatewayProxyResponse{
 				StatusCode: 500,
 				Headers: map[string]string{
-					"Content-Type": "application/json",
+					"Content-Type":                     "application/json",
+					"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+					"Access-Control-Allow-Credentials": "true",
+					"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+					"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 				},
 				Body: "Internal Server Error",
 			}, nil
@@ -77,7 +85,11 @@ func handleGetFiles(ctx context.Context, event events.APIGatewayProxyRequest) (e
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Headers: map[string]string{
-			"Content-Type": "application/json",
+			"Content-Type":                     "application/json",
+			"Access-Control-Allow-Origin":      "https://fileshare.ujjwalsilwal123.com.np",
+			"Access-Control-Allow-Credentials": "true",
+			"Access-Control-Allow-Headers":     "Content-Type, Authorization, X-Id-Token",
+			"Access-Control-Allow-Methods":     "GET,POST,OPTIONS",
 		},
 		Body: string(responseBody),
 	}, nil
