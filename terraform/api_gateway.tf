@@ -218,6 +218,7 @@ module "api_deployment" {
   rest_api_id = module.file_sharing_gateway.rest_api_id
   depends_on = [
     module.api_method,
+    module.api_resource,
     module.cors
   ]
 }
