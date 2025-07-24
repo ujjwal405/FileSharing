@@ -276,5 +276,5 @@ module "cors" {
   api_resource_id = each.value
   allow_headers   = var.allow_headers
   allow_methods   = var.allow_methods
-  allow_origin    = "https://filesharing.ujjwalsilwal123.com.np"
+  allow_origin    = "https://fileshare.ujjwalsilwal123.com.np"
 }
