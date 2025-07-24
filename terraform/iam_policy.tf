@@ -260,7 +260,7 @@ module "iam_policy_s3_user_file_put_object" {
 
 
 // IAM policy for secretManagerGetItem
-module "iam_policy_ssm_parameterr_get_item_cognito_region" {
+module "iam_policy_ssm_parameter_get_item_cognito_region" {
   source      = "./modules/iam/policy"
   policy_name = "ssm_parameter_get_item_cognito_region"
   env_name    = var.env_name
