@@ -216,6 +216,21 @@ module "api_authorizer" {
 module "api_deployment" {
   source      = "./modules/api_deployment"
   rest_api_id = module.file_sharing_gateway.rest_api_id
+  triggers = [
+    module.codeVerification_integration,
+    module.confirmPassword_integration,
+    module.downloadSignedURL_integration,
+    module.forgetPassword_integration,
+    module.getCode_integration,
+    module.googleCallback_integration,
+    module.logout_integration,
+    module.myfiles_integration,
+    module.signin_integration,
+    module.signinGoogle_integration,
+    module.signup_integration,
+    module.uploadMetaData_integration,
+    module.uploadSignedUrl_integration,
+  ]
   depends_on = [
     module.codeVerification_integration,
     module.confirmPassword_integration,
