@@ -217,19 +217,19 @@ module "api_deployment" {
   source      = "./modules/api_deployment"
   rest_api_id = module.file_sharing_gateway.rest_api_id
   triggers = [
-    module.codeVerification_integration,
-    module.confirmPassword_integration,
-    module.downloadSignedURL_integration,
-    module.forgetPassword_integration,
-    module.getCode_integration,
-    module.googleCallback_integration,
-    module.logout_integration,
-    module.myfiles_integration,
-    module.signin_integration,
-    module.signinGoogle_integration,
-    module.signup_integration,
-    module.uploadMetaData_integration,
-    module.uploadSignedUrl_integration,
+    module.codeVerification_integration.integration_id,
+    module.confirmPassword_integration.integration_id,
+    module.downloadSignedURL_integration.integration_id,
+    module.forgetPassword_integration.integration_id,
+    module.getCode_integration.integration_id,
+    module.googleCallback_integration.integration_id,
+    module.logout_integration.integration_id,
+    module.myfiles_integration.integration_id,
+    module.signin_integration.integration_id,
+    module.signinGoogle_integration.integration_id,
+    module.signup_integration.integration_id,
+    module.uploadMetaData_integration.integration_id,
+    module.uploadSignedUrl_integration.integration_id
   ]
   depends_on = [
     module.codeVerification_integration,
