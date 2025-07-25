@@ -216,7 +216,6 @@ module "api_authorizer" {
 module "api_deployment" {
   source      = "./modules/api_deployment"
   rest_api_id = module.file_sharing_gateway.rest_api_id
-  triggers    = module.api_method.methods_signature
   depends_on = [
     module.codeVerification_integration,
     module.confirmPassword_integration,

@@ -1,6 +1,6 @@
 variable "rest_api_id" {}
 
-variable "triggers" {
-  type = string
-}
+# variable "triggers" {
+#   type = string
+# }
 
