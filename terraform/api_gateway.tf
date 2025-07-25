@@ -57,159 +57,159 @@ module "api_authorizer" {
 
 
 //creating api_gateway_resource
-module "api_resource" {
-  source      = "./modules/api_resource"
-  rest_api_id = module.file_sharing_gateway.rest_api_id
-  resources = [
-    {
-      name      = "codeVerification"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "confirmPassword"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "downloadSignedUrl"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "forgetPassword"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "getCode"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "googleCallback"
-      parent_id = module.file_sharing_gateway.root_resource_id
-      }, {
-      name      = "logout"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "myfiles"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "signin"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "signinGoogle"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "signup"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "uploadMetaData"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    },
-    {
-      name      = "uploadSignedUrl"
-      parent_id = module.file_sharing_gateway.root_resource_id
-    }
+# module "api_resource" {
+#   source      = "./modules/api_resource"
+#   rest_api_id = module.file_sharing_gateway.rest_api_id
+#   resources = [
+#     {
+#       name      = "codeVerification"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "confirmPassword"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "downloadSignedUrl"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "forgetPassword"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "getCode"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "googleCallback"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#       }, {
+#       name      = "logout"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "myfiles"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "signin"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "signinGoogle"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "signup"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "uploadMetaData"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     },
+#     {
+#       name      = "uploadSignedUrl"
+#       parent_id = module.file_sharing_gateway.root_resource_id
+#     }
 
-  ]
+#   ]
 
-}
+# }
 
 
 
 // creating api_method
-module "api_method" {
-  source        = "./modules/api_method"
-  rest_api_id   = module.file_sharing_gateway.rest_api_id
-  resource_ids  = module.api_resource.resource_ids
-  authorizer_id = module.api_authorizer.authorizer_id
-  methods = [
-    {
-      resource_name = "/codeVerification" # 👈 Must match the `res.path` key in output!
-      http_method   = "POST"
-      lambda_arn    = module.lambda_code_verification.invocation_arn
-    },
-    {
-      resource_name = "/confirmPassword"
-      http_method   = "POST"
-      lambda_arn    = module.lambda_confirm_password.invocation_arn
+# module "api_method" {
+#   source        = "./modules/api_method"
+#   rest_api_id   = module.file_sharing_gateway.rest_api_id
+#   resource_ids  = module.api_resource.resource_ids
+#   authorizer_id = module.api_authorizer.authorizer_id
+#   methods = [
+#     {
+#       resource_name = "/codeVerification" # 👈 Must match the `res.path` key in output!
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_code_verification.invocation_arn
+#     },
+#     {
+#       resource_name = "/confirmPassword"
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_confirm_password.invocation_arn
 
-    },
-    {
-      resource_name = "/downloadSignedUrl"
-      http_method   = "GET"
-      lambda_arn    = module.lambda_download_signed_url.invocation_arn
-    },
-    {
-      resource_name = "/forgetPassword"
-      http_method   = "POST"
-      lambda_arn    = module.lambda_forget_password.invocation_arn
+#     },
+#     {
+#       resource_name = "/downloadSignedUrl"
+#       http_method   = "GET"
+#       lambda_arn    = module.lambda_download_signed_url.invocation_arn
+#     },
+#     {
+#       resource_name = "/forgetPassword"
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_forget_password.invocation_arn
 
-    },
-    {
-      resource_name = "/getCode"
-      http_method   = "POST"
-      lambda_arn    = module.lambda_get_code.invocation_arn
+#     },
+#     {
+#       resource_name = "/getCode"
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_get_code.invocation_arn
 
 
-    },
-    {
-      resource_name = "/googleCallback"
-      http_method   = "POST"
-      lambda_arn    = module.lambda_google_callback.invocation_arn
+#     },
+#     {
+#       resource_name = "/googleCallback"
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_google_callback.invocation_arn
 
-    },
-    {
-      resource_name  = "/logout"
-      http_method    = "POST"
-      lambda_arn     = module.lambda_logout.invocation_arn
-      use_authorizer = true
+#     },
+#     {
+#       resource_name  = "/logout"
+#       http_method    = "POST"
+#       lambda_arn     = module.lambda_logout.invocation_arn
+#       use_authorizer = true
 
-    },
-    {
-      resource_name  = "/myfiles"
-      http_method    = "GET"
-      lambda_arn     = module.lambda_myfiles.invocation_arn
-      use_authorizer = true
+#     },
+#     {
+#       resource_name  = "/myfiles"
+#       http_method    = "GET"
+#       lambda_arn     = module.lambda_myfiles.invocation_arn
+#       use_authorizer = true
 
-    },
-    {
-      resource_name = "/signin"
-      http_method   = "POST"
-      lambda_arn    = module.lambda_signin.invocation_arn
+#     },
+#     {
+#       resource_name = "/signin"
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_signin.invocation_arn
 
-    },
-    {
-      resource_name = "/signinGoogle"
-      http_method   = "POST"
-      lambda_arn    = module.lambda_signin_google.invocation_arn
+#     },
+#     {
+#       resource_name = "/signinGoogle"
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_signin_google.invocation_arn
 
-    },
-    {
-      resource_name = "/signup"
-      http_method   = "POST"
-      lambda_arn    = module.lambda_signup.invocation_arn
+#     },
+#     {
+#       resource_name = "/signup"
+#       http_method   = "POST"
+#       lambda_arn    = module.lambda_signup.invocation_arn
 
-    },
+#     },
 
-    {
-      resource_name  = "/uploadMetaData"
-      http_method    = "POST"
-      lambda_arn     = module.lambda_upload_metadata.invocation_arn
-      use_authorizer = true
+#     {
+#       resource_name  = "/uploadMetaData"
+#       http_method    = "POST"
+#       lambda_arn     = module.lambda_upload_metadata.invocation_arn
+#       use_authorizer = true
 
-    },
-    {
-      resource_name  = "/uploadSignedUrl"
-      http_method    = "GET"
-      lambda_arn     = module.lambda_upload_signed_url.invocation_arn
-      use_authorizer = true
+#     },
+#     {
+#       resource_name  = "/uploadSignedUrl"
+#       http_method    = "GET"
+#       lambda_arn     = module.lambda_upload_signed_url.invocation_arn
+#       use_authorizer = true
 
-    },
-  ]
-}
+#     },
+#   ]
+# }
 
 
 // api_gateway_deployment
@@ -218,8 +218,19 @@ module "api_deployment" {
   rest_api_id = module.file_sharing_gateway.rest_api_id
   triggers    = module.api_method.methods_signature
   depends_on = [
-    module.api_method,
-    module.api_resource,
+    module.codeVerification_integration,
+    module.confirmPassword_integratio,
+    module.downloadSignedURL_integration,
+    module.forgetPassword_integration,
+    module.getCode_integration,
+    module.googleCallback_integration,
+    module.logout_integration,
+    module.myfiles_integration,
+    module.signin_integration,
+    module.signinGoogle_integration,
+    module.signup_integration,
+    module.uploadMetaData_integration,
+    module.uploadSignedUrl_integration,
     module.cors
   ]
 }
