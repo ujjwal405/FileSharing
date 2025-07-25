@@ -14,22 +14,22 @@ locals {
   #   "/uploadMetaData",
   #   "/uploadSignedUrl"
   # ]
-  full_resource_map = module.api_resource.resource_ids
+  # full_resource_map = module.api_resource.resource_ids
 
   cors_map = {
-    "/codeVerification"  = lookup(local.full_resource_map, "/codeVerification", null)
-    "/confirmPassword"   = lookup(local.full_resource_map, "/confirmPassword", null)
-    "/downloadSignedUrl" = lookup(local.full_resource_map, "/downloadSignedUrl", null)
-    "/forgetPassword"    = lookup(local.full_resource_map, "/forgetPassword", null)
-    "/getCode"           = lookup(local.full_resource_map, "/getCode", null)
-    "/googleCallback"    = lookup(local.full_resource_map, "/googleCallback", null)
-    "/logout"            = lookup(local.full_resource_map, "/logout", null)
-    "/myfiles"           = lookup(local.full_resource_map, "/myfiles", null)
-    "/signin"            = lookup(local.full_resource_map, "/signin", null)
-    "/signinGoogle"      = lookup(local.full_resource_map, "/signinGoogle", null)
-    "/signup"            = lookup(local.full_resource_map, "/signup", null)
-    "/uploadMetaData"    = lookup(local.full_resource_map, "/uploadMetaData", null)
-    "/uploadSignedUrl"   = lookup(local.full_resource_map, "/uploadSignedUrl", null)
+    "/codeVerification"  = module.codeVerification_resource.resource_id,
+    "/confirmPassword"   = module.confirmPassword_resource.resource_id,
+    "/downloadSignedUrl" = module.downloadSignedURL_resource.resource_id,
+    "/forgetPassword"    = module.forgetPassword_resource.resource_id,
+    "/getCode"           = module.getCode_resource.resource_id,
+    "/googleCallback"    = module.googleCallback_resource.resource_id,
+    "/logout"            = module.logout_resource.resource_id,
+    "/myfiles"           = module.myfiles_resource.resource_id,
+    "/signin"            = module.signin_resource.resource_id,
+    "/signinGoogle"      = module.signinGoogle_resource.resource_id,
+    "/signup"            = module.signup_resource.resource_id,
+    "/uploadMetaData"    = module.uploadMetaData_resource.resource_id,
+    "/uploadSignedUrl"   = module.uploadSignedUrl_resource.resource_id
   }
 
 }
@@ -219,7 +219,7 @@ module "api_deployment" {
   triggers    = module.api_method.methods_signature
   depends_on = [
     module.codeVerification_integration,
-    module.confirmPassword_integratio,
+    module.confirmPassword_integration,
     module.downloadSignedURL_integration,
     module.forgetPassword_integration,
     module.getCode_integration,

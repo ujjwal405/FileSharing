@@ -68,3 +68,25 @@ module "signinGoogle_resource" {
   path_part   = "signinGoogle"
 }
 
+
+module "signup_resource" {
+  source      = "./modules/api_resource"
+  rest_api_id = module.file_sharing_gateway.rest_api_id
+  parent_id   = module.file_sharing_gateway.root_resource_id
+  path_part   = "signup"
+}
+
+module "uploadMetaData_resource" {
+  source      = "./modules/api_resource"
+  rest_api_id = module.file_sharing_gateway.rest_api_id
+  parent_id   = module.file_sharing_gateway.root_resource_id
+  path_part   = "uploadMetaData"
+}
+
+module "uploadSignedUrl_resource" {
+  source      = "./modules/api_resource"
+  rest_api_id = module.file_sharing_gateway.rest_api_id
+  parent_id   = module.file_sharing_gateway.root_resource_id
+  path_part   = "uploadSignedUrl"
+}
+
